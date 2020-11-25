@@ -1,0 +1,46 @@
+Players -> HashMap<String Name, String Symbol>
+Board -> Array of Array
+Turn Management -> HashMap of Players
+
+class
+    ConsolePresenter     implements    Presenter
+        scanner
+        system.out
+
+        - getUserMove
+        - present
+
+
+    TicTacToe(main)
+        - main
+
+    Game
+        Players
+        Board
+        TurnManagement
+
+        - run
+        - isGameOver
+            private
+
+    Board
+        Array of Array
+
+        - playMoveOn(index, symbol)
+        - checkWinner (think of a better name)
+
+
+feature
+     1. presenting the board
+     2. letting player to play move
+     3. manage player's turn
+     4. winning and draw condition
+     5. Error Handling
+
+
+
+
+
+
+
+
