@@ -2,6 +2,7 @@ feature
      1. presenting the board -
      2. letting player to play move
      3. manage player's turn
+        - think about iterator
      4. winning and draw condition
      5. Error Handling
 

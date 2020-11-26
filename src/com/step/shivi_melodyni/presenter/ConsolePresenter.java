@@ -53,4 +53,9 @@ public class ConsolePresenter{
             return getPlayerMove(currentPlayerDTO, size);
         }
     }
+
+    public void presentCellNotVacantError(int cellNo, int size) {
+        this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
+            cellNo, size));
+    }
 }

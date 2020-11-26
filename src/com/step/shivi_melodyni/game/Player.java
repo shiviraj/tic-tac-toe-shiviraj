@@ -14,4 +14,8 @@ public class Player {
     public PlayerDTO toDTO() {
         return new PlayerDTO(this.name, this.symbol);
     }
+
+    public char getSymbol() {
+        return this.symbol;
+    }
 }

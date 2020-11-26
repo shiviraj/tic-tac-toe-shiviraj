@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 public class Game {
     private final Board board;
-    private final HashMap<Player,Player> nextPlayer;
+    private final HashMap<Player, Player> nextPlayer;
     private Player currentPlayer;
 
     public Game(String player1Name, String player2Name, int boardSize) {
@@ -19,13 +19,30 @@ public class Game {
         this.nextPlayer.put(player1, player2);
         this.nextPlayer.put(player2, player1);
 
-        this.currentPlayer = player2;
+        this.currentPlayer = player1;
         this.board = new Board(boardSize);
     }
 
     public void run(ConsolePresenter presenter) {
+        int i = 1;
         presentPlayerAndBoard(presenter);
-        int playerMove = presenter.getPlayerMove(this.currentPlayer.toDTO(), this.board.size());
+        while (i <= this.board.size()) {
+            int playerMove = getPlayerMove(presenter);
+            this.board.place(playerMove, this.currentPlayer.getSymbol());
+            presentPlayerAndBoard(presenter);
+            this.currentPlayer = this.nextPlayer.get(this.currentPlayer);
+            i++;
+        }
+    }
+
+    private int getPlayerMove(ConsolePresenter presenter) {
+        int boardSize = this.board.size();
+        int playerMove = presenter.getPlayerMove(this.currentPlayer.toDTO(), boardSize);
+        if (!this.board.isValidMove(playerMove)) {
+            presenter.presentCellNotVacantError(playerMove, boardSize);
+            return getPlayerMove(presenter);
+        }
+        return playerMove;
     }
 
     private void presentPlayerAndBoard(ConsolePresenter presenter) {
