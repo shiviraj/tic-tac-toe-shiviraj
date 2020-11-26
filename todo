@@ -1,9 +1,16 @@
+things to modify
+    game constructor
+    player class
+    move hasGameWon into game class
+    thinking of a higher data structure for board
+
+
 feature
     --done-- 1. presenting the board -
     --done-- 2. letting player to play move
     --done-- 3. manage player's turn
                  - think about iterator
-     4. winning and draw condition
+    --done-- 4. winning and draw condition
     --done-- 5. Error Handling
 
 
