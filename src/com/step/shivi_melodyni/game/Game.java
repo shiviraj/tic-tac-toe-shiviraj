@@ -3,6 +3,7 @@ package com.step.shivi_melodyni.game;
 import com.step.shivi_melodyni.presenter.ConsolePresenter;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Game {
     private final Board board;
@@ -18,12 +19,20 @@ public class Game {
         this.nextPlayer.put(player1, player2);
         this.nextPlayer.put(player2, player1);
 
-        this.currentPlayer = player1;
+        this.currentPlayer = player2;
         this.board = new Board(boardSize);
     }
 
     public void run(ConsolePresenter presenter) {
+        presentPlayer(presenter);
         presenter.presentBoard(this.board.toDTO());
+    }
+
+    private void presentPlayer(ConsolePresenter presenter) {
+        Iterator<Player> iterator = this.nextPlayer.keySet().iterator();
+        Player player1 = iterator.next();
+        Player player2 = iterator.next();
+        presenter.presentPlayer(player1.toDTO(), player2.toDTO());
     }
 
 }

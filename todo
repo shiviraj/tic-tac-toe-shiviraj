@@ -1,3 +1,11 @@
+feature
+     1. presenting the board -
+     2. letting player to play move
+     3. manage player's turn
+     4. winning and draw condition
+     5. Error Handling
+
+
 Players -> HashMap<String Name, String Symbol>
 Board -> Array of Array
 Turn Management -> HashMap of Players
@@ -35,9 +43,3 @@ class
 
         -
 
-feature
-     1. presenting the board -
-     2. letting player to play move
-     3. manage player's turn
-     4. winning and draw condition
-     5. Error Handling

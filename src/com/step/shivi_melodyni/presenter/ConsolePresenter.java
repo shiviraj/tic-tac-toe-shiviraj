@@ -1,6 +1,7 @@
 package com.step.shivi_melodyni.presenter;
 
 import com.step.shivi_melodyni.dto.BoardDTO;
+import com.step.shivi_melodyni.dto.PlayerDTO;
 import com.step.shivi_melodyni.io.Reader;
 import com.step.shivi_melodyni.io.Writer;
 
@@ -31,5 +32,11 @@ public class ConsolePresenter{
             stringBuilder.append("\n");
         }
         this.writer.write(String.valueOf(stringBuilder));
+    }
+
+    public void presentPlayer(PlayerDTO player1DTO, PlayerDTO player2DTO) {
+        String player = String.format("%s:%c %s:%c", player1DTO.getName(), player1DTO.getSymbol(),
+            player2DTO.getName(), player2DTO.getSymbol());
+        this.writer.write(player);
     }
 }

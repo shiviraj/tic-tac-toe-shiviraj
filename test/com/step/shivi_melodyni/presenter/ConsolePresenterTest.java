@@ -1,6 +1,7 @@
 package com.step.shivi_melodyni.presenter;
 
 import com.step.shivi_melodyni.dto.BoardDTO;
+import com.step.shivi_melodyni.dto.PlayerDTO;
 import com.step.shivi_melodyni.io.Writer;
 import org.junit.Test;
 
@@ -17,8 +18,7 @@ public class ConsolePresenterTest {
 
         consolePresenter.presentBoard(boardDTO);
 
-        String expected = "1  2  \n3  4  \n";
-        verify(writer).write(expected);
+        verify(writer).write("1  2  \n3  4  \n");
     }
 
     @Test
@@ -31,7 +31,18 @@ public class ConsolePresenterTest {
 
         consolePresenter.presentBoard(boardDTO);
 
-        String expected = "1  X  \n3  4  \n";
-        verify(writer).write(expected);
+        verify(writer).write("1  X  \n3  4  \n");
+    }
+
+    @Test
+    public void shouldPresentBothPlayerNamesAndTheirSymbol() {
+        Writer writer = mock(Writer.class);
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> 4);
+
+        PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
+        PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
+        consolePresenter.presentPlayer(player1DTO, player2DTO);
+
+        verify(writer).write("Ramesh:X Suresh:O");
     }
 }
