@@ -1,12 +1,11 @@
 package com.step.shivi_melodyni.presenter;
 
-import com.step.shivi_melodyni.dto.GameDTO;
+import com.step.shivi_melodyni.dto.BoardDTO;
 import com.step.shivi_melodyni.io.Reader;
 import com.step.shivi_melodyni.io.Writer;
 
 
 public class ConsolePresenter{
-
     private final Writer writer;
     private final Reader reader;
 
@@ -15,24 +14,22 @@ public class ConsolePresenter{
         this.reader = reader;
     }
 
-    public void present(GameDTO gameDTO) {
-        this.writer.write(presentBoard(gameDTO));
-    }
-
-    private String presentBoard(GameDTO gameDTO) {
+    public void presentBoard(BoardDTO boardDTO) {
+        char [][] board = boardDTO.getCells();
         StringBuilder stringBuilder = new StringBuilder();
-        int length = gameDTO.getBoardDTO().length;
         int cellNo = 1;
 
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
-                char cellChar = gameDTO.getBoardDTO()[i][j];
-                String cell = cellChar == '\u0000' ? Integer.toString(cellNo) : String.valueOf(cellChar);
-                stringBuilder.append(cell).append("  ");
+        for (char[] row : board) {
+            for (char cellChar : row) {
+                if (cellChar == '\u0000') {
+                    stringBuilder.append(cellNo).append("  ");
+                } else {
+                    stringBuilder.append(cellChar).append("  ");
+                }
                 cellNo++;
             }
             stringBuilder.append("\n");
         }
-        return String.valueOf(stringBuilder);
+        this.writer.write(String.valueOf(stringBuilder));
     }
 }

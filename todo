@@ -29,6 +29,11 @@ class
         - playMoveOn(index, symbol)
         - checkWinner (think of a better name)
 
+     Player
+        name
+        symbol
+
+        -
 
 feature
      1. presenting the board -
@@ -36,11 +41,3 @@ feature
      3. manage player's turn
      4. winning and draw condition
      5. Error Handling
-
-
-
-
-
-
-
-
