@@ -12,7 +12,7 @@ public class TicTacToe {
 
         int boardSize = 3;
         Game game = new Game(player1, player2, boardSize);
-        ConsolePresenter consolePresenter = new ConsolePresenter(System.out::print, new Scanner(System.in)::nextInt);
+        ConsolePresenter consolePresenter = new ConsolePresenter(System.out::print, new Scanner(System.in)::nextLine);
         game.run(consolePresenter);
     }
 }

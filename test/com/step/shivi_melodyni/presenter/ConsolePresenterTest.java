@@ -13,7 +13,7 @@ public class ConsolePresenterTest {
     @Test
     public void shouldPresentCellNoOnEmptyTicTacToeBoard() {
         Writer writer = mock(Writer.class);
-        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> 4);
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "4");
         BoardDTO boardDTO = new BoardDTO(new char[2][2]);
 
         consolePresenter.presentBoard(boardDTO);
@@ -24,7 +24,7 @@ public class ConsolePresenterTest {
     @Test
     public void shouldPresentSymbolOnTicTacToeBoardIfCellIsPlayed() {
         Writer writer = mock(Writer.class);
-        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> 4);
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "4");
         char[][] cells = new char[2][2];
         cells[0][1] = 'X';
         BoardDTO boardDTO = new BoardDTO(cells);
@@ -37,7 +37,7 @@ public class ConsolePresenterTest {
     @Test
     public void shouldPresentBothPlayerNamesAndTheirSymbol() {
         Writer writer = mock(Writer.class);
-        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> 4);
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "4");
 
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
@@ -51,12 +51,28 @@ public class ConsolePresenterTest {
         Writer writer = mock(Writer.class);
         Reader reader = mock(Reader.class);
 
-        when(reader.readInt()).thenReturn(1);
+        when(reader.readLine()).thenReturn("1");
 
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, reader);
-        int playerMove = consolePresenter.getPlayerMove(new PlayerDTO("Ramesh", 'X'));
+        int playerMove = consolePresenter.getPlayerMove(new PlayerDTO("Ramesh", 'X'), 9);
 
         verify(writer).write("Ramesh's turn. Please enter the cell number > ");
+        assertEquals(1, playerMove);
+    }
+
+    @Test
+    public void shouldAskPlayerMoveAgainAfterPresentingInvalidCellError() {
+        Writer writer = mock(Writer.class);
+        Reader reader = mock(Reader.class);
+
+        when(reader.readLine()).thenReturn("A").thenReturn("1");
+
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, reader);
+        int playerMove = consolePresenter.getPlayerMove(new PlayerDTO("Ramesh", 'X'), 9);
+
+        verify(writer, times(2)).write("Ramesh's turn. Please enter the cell number > ");
+        verify(writer).write("*ERROR* Invalid Cell A, Please provide a vacant cell between 1-9\n");
+        verify(reader, times(2)).readLine();
         assertEquals(1, playerMove);
     }
 }

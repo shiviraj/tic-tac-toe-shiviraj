@@ -11,7 +11,7 @@ public class GameTest {
     public void shouldRunTicTacToeGame() {
         Writer writer = mock(Writer.class);
         Game game = new Game("Ramesh", "Suresh", 2);
-        game.run(new ConsolePresenter(writer, ()->4));
+        game.run(new ConsolePresenter(writer, ()->"4"));
 
         String expected = "1  2  \n3  4  \n";
         verify(writer).write(expected);

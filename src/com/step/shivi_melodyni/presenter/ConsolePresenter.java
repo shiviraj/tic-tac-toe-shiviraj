@@ -5,7 +5,6 @@ import com.step.shivi_melodyni.dto.PlayerDTO;
 import com.step.shivi_melodyni.io.Reader;
 import com.step.shivi_melodyni.io.Writer;
 
-
 public class ConsolePresenter{
     private final Writer writer;
     private final Reader reader;
@@ -41,9 +40,17 @@ public class ConsolePresenter{
         this.writer.write(player);
     }
 
-    public int getPlayerMove(PlayerDTO currentPlayerDTO) {
+    public int getPlayerMove(PlayerDTO currentPlayerDTO, int size) {
         String promptMsg = String.format("%s's turn. Please enter the cell number > ", currentPlayerDTO.getName());
         this.writer.write(promptMsg);
-        return this.reader.readInt();
+        String input = this.reader.readLine();
+        try {
+            return new Integer(input);
+        } catch (NumberFormatException e) {
+            String invalidCellError = String.format("*ERROR* Invalid Cell %s, Please provide a vacant cell between " +
+                "1-%d\n", input, size);
+            this.writer.write(invalidCellError);
+            return getPlayerMove(currentPlayerDTO, size);
+        }
     }
 }

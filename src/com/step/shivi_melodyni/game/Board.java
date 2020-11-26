@@ -10,6 +10,10 @@ public class Board {
         this.cells = new char[boardSize][boardSize];
     }
 
+    public int size() {
+        return this.cells.length * this.cells.length;
+    }
+
     public BoardDTO toDTO() {
         return new BoardDTO(this.cells);
     }
