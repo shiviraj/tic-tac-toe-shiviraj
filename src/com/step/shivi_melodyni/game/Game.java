@@ -25,6 +25,7 @@ public class Game {
 
     public void run(ConsolePresenter presenter) {
         presentPlayerAndBoard(presenter);
+        int playerMove = presenter.getPlayerMove(this.currentPlayer.toDTO());
     }
 
     private void presentPlayerAndBoard(ConsolePresenter presenter) {

@@ -36,8 +36,14 @@ public class ConsolePresenter{
 
     public void presentPlayer(PlayerDTO player1DTO, PlayerDTO player2DTO) {
         String divider = "---------------------";
-        String player = String.format("%s\n%s:%c %s:%c", divider , player1DTO.getName(), player1DTO.getSymbol(),
+        String player = String.format("%s\n%s:%c %s:%c\n", divider , player1DTO.getName(), player1DTO.getSymbol(),
             player2DTO.getName(), player2DTO.getSymbol());
         this.writer.write(player);
+    }
+
+    public int getPlayerMove(PlayerDTO currentPlayerDTO) {
+        String promptMsg = String.format("%s's turn. Please enter the cell number > ", currentPlayerDTO.getName());
+        this.writer.write(promptMsg);
+        return this.reader.readInt();
     }
 }

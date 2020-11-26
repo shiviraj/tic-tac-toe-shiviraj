@@ -4,8 +4,7 @@ import com.step.shivi_melodyni.io.Writer;
 import com.step.shivi_melodyni.presenter.ConsolePresenter;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class GameTest {
     @Test
