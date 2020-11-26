@@ -94,7 +94,7 @@ public class ConsolePresenterTest {
 
         consolePresenter.declareWinner(new PlayerDTO("Ramesh", 'X'));
 
-        verify(writer).write("Ramesh wins");
+        verify(writer).write("Ramesh wins\n");
     }
 
     @Test
@@ -104,6 +104,6 @@ public class ConsolePresenterTest {
 
         consolePresenter.declareGameDraw();
 
-        verify(writer).write("Game ended in a Draw");
+        verify(writer).write("Game ended in a Draw\n");
     }
 }

@@ -60,10 +60,10 @@ public class ConsolePresenter{
     }
 
     public void declareGameDraw() {
-        this.writer.write("Game ended in a Draw");
+        this.writer.write("Game ended in a Draw\n");
     }
 
     public void declareWinner(PlayerDTO winnerDTO) {
-        this.writer.write(String.format("%s wins", winnerDTO.getName()));
+        this.writer.write(String.format("%s wins\n", winnerDTO.getName()));
     }
 }

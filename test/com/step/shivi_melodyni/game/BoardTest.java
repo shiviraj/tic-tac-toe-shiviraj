@@ -47,4 +47,74 @@ public class BoardTest {
         Board board = new Board(2);
         assertEquals(4, board.size());
     }
+
+    @Test
+    public void shouldGiveTrueIfFirstRowsHaveSameSymbols() {
+        Board board = new Board(3);
+        board.place(1,'X');
+        board.place(2,'X');
+        board.place(3,'X');
+        assertTrue(board.hasGameWon());
+    }
+
+    @Test
+    public void shouldGiveTrueIfSecondRowsHaveSameSymbols() {
+        Board board = new Board(3);
+        board.place(4,'X');
+        board.place(5,'X');
+        board.place(6,'X');
+        assertTrue(board.hasGameWon());
+    }
+
+    @Test
+    public void shouldGiveTrueIfThirdRowsHaveSameSymbols() {
+        Board board = new Board(3);
+        board.place(7, 'O');
+        board.place(8, 'O');
+        board.place(9, 'O');
+        assertTrue(board.hasGameWon());
+    }
+
+    @Test
+    public void shouldGiveTrueIfFirstColumnHaveSameSymbols() {
+        Board board = new Board(3);
+        board.place(1, 'O');
+        board.place(4, 'O');
+        board.place(7, 'O');
+        assertTrue(board.hasGameWon());
+    }    @Test
+    public void shouldGiveTrueIfSecondColumnHaveSameSymbols() {
+        Board board = new Board(3);
+        board.place(2, 'O');
+        board.place(5, 'O');
+        board.place(8, 'O');
+        assertTrue(board.hasGameWon());
+    }
+
+    @Test
+    public void shouldGiveTrueIfThirdColumnHaveSameSymbols() {
+        Board board = new Board(3);
+        board.place(3, 'O');
+        board.place(6, 'O');
+        board.place(9, 'O');
+        assertTrue(board.hasGameWon());
+    }
+
+    @Test
+    public void shouldGiveTrueIfDiagonalHaveSameSymbols() {
+        Board board = new Board(3);
+        board.place(1, 'O');
+        board.place(5, 'O');
+        board.place(9, 'O');
+        assertTrue(board.hasGameWon());
+    }
+
+    @Test
+    public void shouldGiveTrueIfReverseDiagonalHaveSameSymbols() {
+        Board board = new Board(3);
+        board.place(3, 'O');
+        board.place(5, 'O');
+        board.place(7, 'O');
+        assertTrue(board.hasGameWon());
+    }
 }

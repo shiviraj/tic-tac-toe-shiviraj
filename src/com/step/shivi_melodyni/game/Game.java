@@ -32,7 +32,7 @@ public class Game {
             presentPlayerAndBoard(presenter);
             Player winner = checkWinner();
             if(winner != null){
-                presenter.declareWinner(this.currentPlayer.toDTO());
+                presenter.declareWinner(winner.toDTO());
                 return;
             }
             this.currentPlayer = this.nextPlayer.get(this.currentPlayer);
@@ -42,6 +42,9 @@ public class Game {
     }
 
     private Player checkWinner() {
+        if(this.board.hasGameWon()){
+            return this.currentPlayer;
+        }
         return null;
     }
 
