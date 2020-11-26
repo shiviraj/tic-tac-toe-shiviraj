@@ -24,15 +24,15 @@ public class Game {
     }
 
     public void run(ConsolePresenter presenter) {
-        presentPlayer(presenter);
-        presenter.presentBoard(this.board.toDTO());
+        presentPlayerAndBoard(presenter);
     }
 
-    private void presentPlayer(ConsolePresenter presenter) {
+    private void presentPlayerAndBoard(ConsolePresenter presenter) {
         Iterator<Player> iterator = this.nextPlayer.keySet().iterator();
         Player player1 = iterator.next();
         Player player2 = iterator.next();
         presenter.presentPlayer(player1.toDTO(), player2.toDTO());
+        presenter.presentBoard(this.board.toDTO());
     }
 
 }
