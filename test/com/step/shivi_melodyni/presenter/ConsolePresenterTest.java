@@ -13,7 +13,7 @@ public class ConsolePresenterTest {
     public void shouldPresentTicTacToeBoard() {
         Writer writer = mock(Writer.class);
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> 4);
-        GameDTO gameDTO = new GameDTO(new BoardDTO(new String[][]{{"1", "2"}, {"3", "4"}}));
+        GameDTO gameDTO = new GameDTO(new BoardDTO(new char[2][2]));
 
         consolePresenter.present(gameDTO);
 

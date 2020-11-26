@@ -9,7 +9,7 @@ public class BoardTest {
     @Test
     public void shouldGiveBoardDTO() {
         Board board = new Board(2);
-        BoardDTO boardDTO = new BoardDTO(new String[][]{{"1", "2"}, {"3", "4"}});
+        BoardDTO boardDTO = new BoardDTO(new char[2][2]);
         assertEquals(boardDTO, board.toDTO());
     }
 }

@@ -3,13 +3,13 @@ package com.step.shivi_melodyni.dto;
 import java.util.Arrays;
 
 public class BoardDTO {
-    private String[][] cells;
+    private char[][] cells;
 
-    public BoardDTO(String[][] cells) {
+    public BoardDTO(char[][] cells) {
         this.cells = cells;
     }
 
-    public String[][] getCells() {
+    public char[][] getCells() {
         return cells;
     }
 

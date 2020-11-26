@@ -7,7 +7,7 @@ public class GameDTO {
         this.boardDTO = boardDTO;
     }
 
-    public String[][] getBoardDTO() {
+    public char[][] getBoardDTO() {
         return boardDTO.getCells();
     }
 }

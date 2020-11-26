@@ -16,16 +16,23 @@ public class ConsolePresenter{
     }
 
     public void present(GameDTO gameDTO) {
-        StringBuilder stringBuilder = new StringBuilder("");
+        this.writer.write(presentBoard(gameDTO));
+    }
+
+    private String presentBoard(GameDTO gameDTO) {
+        StringBuilder stringBuilder = new StringBuilder();
         int length = gameDTO.getBoardDTO().length;
-        
+        int cellNo = 1;
+
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
-                stringBuilder.append(gameDTO.getBoardDTO()[i][j]).append("  ");
+                char cellChar = gameDTO.getBoardDTO()[i][j];
+                String cell = cellChar == '\u0000' ? Integer.toString(cellNo) : String.valueOf(cellChar);
+                stringBuilder.append(cell).append("  ");
+                cellNo++;
             }
             stringBuilder.append("\n");
         }
-
-        this.writer.write(String.valueOf(stringBuilder));
+        return String.valueOf(stringBuilder);
     }
 }
