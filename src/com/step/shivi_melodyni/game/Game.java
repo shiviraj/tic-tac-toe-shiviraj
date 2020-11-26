@@ -30,9 +30,19 @@ public class Game {
             int playerMove = getPlayerMove(presenter);
             this.board.place(playerMove, this.currentPlayer.getSymbol());
             presentPlayerAndBoard(presenter);
+            Player winner = checkWinner();
+            if(winner != null){
+                presenter.declareWinner(this.currentPlayer.toDTO());
+                return;
+            }
             this.currentPlayer = this.nextPlayer.get(this.currentPlayer);
             i++;
         }
+        presenter.declareGameDraw();
+    }
+
+    private Player checkWinner() {
+        return null;
     }
 
     private int getPlayerMove(ConsolePresenter presenter) {

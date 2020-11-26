@@ -27,4 +27,24 @@ public class GameTest {
         inOrder.verify(writer).write("X  O  \nX  4  \n");
         inOrder.verify(writer).write("X  O  \nX  O  \n");
     }
+
+    @Test
+    public void shouldRunTicTacToeAndHandleInvalidMove() {
+        Writer writer = mock(Writer.class);
+        Reader reader = mock(Reader.class);
+        InOrder inOrder = inOrder(writer);
+
+        when(reader.readLine()).thenReturn("1", "1","2","3","4");
+
+        Game game = new Game("Ramesh", "Suresh", 2);
+        game.run(new ConsolePresenter(writer, reader));
+
+
+        inOrder.verify(writer).write("1  2  \n3  4  \n");
+        inOrder.verify(writer).write("X  2  \n3  4  \n");
+        inOrder.verify(writer).write("*ERROR* Cell 1 is Not Vacant, Please provide a vacant cell between 1-4\n");
+        inOrder.verify(writer).write("X  O  \n3  4  \n");
+        inOrder.verify(writer).write("X  O  \nX  4  \n");
+        inOrder.verify(writer).write("X  O  \nX  O  \n");
+    }
 }

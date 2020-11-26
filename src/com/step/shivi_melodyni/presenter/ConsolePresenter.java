@@ -58,4 +58,12 @@ public class ConsolePresenter{
         this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
             cellNo, size));
     }
+
+    public void declareGameDraw() {
+        this.writer.write("Game ended in a Draw");
+    }
+
+    public void declareWinner(PlayerDTO winnerDTO) {
+        this.writer.write(String.format("%s wins", winnerDTO.getName()));
+    }
 }

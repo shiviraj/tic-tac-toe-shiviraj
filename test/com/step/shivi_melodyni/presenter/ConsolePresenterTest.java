@@ -75,4 +75,35 @@ public class ConsolePresenterTest {
         verify(reader, times(2)).readLine();
         assertEquals(1, playerMove);
     }
+
+    @Test
+    public void shouldPresentCellNotVacantError() {
+        Writer writer = mock(Writer.class);
+
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, ()->"1");
+
+        consolePresenter.presentCellNotVacantError(1, 9);
+
+        verify(writer).write("*ERROR* Cell 1 is Not Vacant, Please provide a vacant cell between 1-9\n");
+    }
+
+    @Test
+    public void shouldDeclareTheWinner() {
+        Writer writer = mock(Writer.class);
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, ()->"1");
+
+        consolePresenter.declareWinner(new PlayerDTO("Ramesh", 'X'));
+
+        verify(writer).write("Ramesh wins");
+    }
+
+    @Test
+    public void shouldDeclareGameDraw() {
+        Writer writer = mock(Writer.class);
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, ()->"1");
+
+        consolePresenter.declareGameDraw();
+
+        verify(writer).write("Game ended in a Draw");
+    }
 }
