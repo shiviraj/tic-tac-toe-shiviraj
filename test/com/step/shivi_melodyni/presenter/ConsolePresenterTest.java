@@ -43,7 +43,7 @@ public class ConsolePresenterTest {
 
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        consolePresenter.presentPlayer(player1DTO, player2DTO);
+        consolePresenter.presentPlayers(player1DTO, player2DTO);
 
         verify(writer).write("---------------------\nRamesh:X Suresh:O\n");
     }

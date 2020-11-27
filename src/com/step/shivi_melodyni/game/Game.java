@@ -1,6 +1,7 @@
 package com.step.shivi_melodyni.game;
 
 import com.step.shivi_melodyni.presenter.ConsolePresenter;
+import com.step.shivi_melodyni.presenter.Presenter;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -55,7 +56,7 @@ public class Game {
             this.board.anyDiagonalContainsSameSymbol();
     }
 
-    private int getPlayerMove(ConsolePresenter presenter) {
+    private int getPlayerMove(Presenter presenter) {
         int boardSize = this.board.size();
         int playerMove = presenter.getPlayerMove(this.currentPlayer.toDTO(), boardSize);
         if (!this.board.isValidMove(playerMove)) {
@@ -65,11 +66,11 @@ public class Game {
         return playerMove;
     }
 
-    private void presentPlayerAndBoard(ConsolePresenter presenter) {
+    private void presentPlayerAndBoard(Presenter presenter) {
         Iterator<Player> iterator = this.nextPlayer.keySet().iterator();
         Player player1 = iterator.next();
         Player player2 = iterator.next();
-        presenter.presentPlayer(player1.toDTO(), player2.toDTO());
+        presenter.presentPlayers(player1.toDTO(), player2.toDTO());
         presenter.presentBoard(this.board.toDTO());
     }
 

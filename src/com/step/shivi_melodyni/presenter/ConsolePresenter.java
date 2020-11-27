@@ -7,7 +7,7 @@ import com.step.shivi_melodyni.io.Writer;
 
 import java.util.TreeMap;
 
-public class ConsolePresenter {
+public class ConsolePresenter implements Presenter {
     private final Writer writer;
     private final Reader reader;
 
@@ -16,14 +16,15 @@ public class ConsolePresenter {
         this.reader = reader;
     }
 
+    @Override
     public void presentBoard(BoardDTO boardDTO) {
         TreeMap<Integer, Character> board = boardDTO.getCells();
         StringBuilder stringBuilder = new StringBuilder();
         int size = boardDTO.getSize();
         for (int i = 1; i <= size * size; i++) {
-            if(board.containsKey(i)){
+            if (board.containsKey(i)) {
                 stringBuilder.append(board.get(i)).append("  ");
-            }else{
+            } else {
                 stringBuilder.append(i).append("  ");
             }
             stringBuilder.append(i % size == 0 ? "\n" : "");
@@ -31,13 +32,15 @@ public class ConsolePresenter {
         this.writer.write(String.valueOf(stringBuilder));
     }
 
-    public void presentPlayer(PlayerDTO player1DTO, PlayerDTO player2DTO) {
+    @Override
+    public void presentPlayers(PlayerDTO player1DTO, PlayerDTO player2DTO) {
         String divider = "---------------------";
         String player = String.format("%s\n%s:%c %s:%c\n", divider, player1DTO.getName(), player1DTO.getSymbol(),
             player2DTO.getName(), player2DTO.getSymbol());
         this.writer.write(player);
     }
 
+    @Override
     public int getPlayerMove(PlayerDTO currentPlayerDTO, int size) {
         String promptMsg = String.format("%s's turn. Please enter the cell number > ", currentPlayerDTO.getName());
         this.writer.write(promptMsg);
@@ -52,15 +55,18 @@ public class ConsolePresenter {
         }
     }
 
+    @Override
     public void presentCellNotVacantError(int cellNo, int size) {
         this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
-            cellNo,  size));
+            cellNo, size));
     }
 
+    @Override
     public void declareGameDraw() {
         this.writer.write("Game ended in a Draw\n");
     }
 
+    @Override
     public void declareWinner(PlayerDTO winnerDTO) {
         this.writer.write(String.format("%s wins\n", winnerDTO.getName()));
     }
