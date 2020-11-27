@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class TicTacToe {
     public static void main(String[] args) {
-        String player1 = "Ramesh";
-        String player2 = "Suresh";
+        String player1 = args[0];
+        String player2 = args[1];
 
         int boardSize = 3;
         Game game = new Game(player1, player2, boardSize);
