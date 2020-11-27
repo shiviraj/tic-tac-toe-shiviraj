@@ -1,16 +1,23 @@
 package com.step.shivi_melodyni.dto;
 
-import java.util.Arrays;
+import java.util.Objects;
+import java.util.TreeMap;
 
 public class BoardDTO {
-    private char[][] cells;
+    private final TreeMap<Integer, Character> cells;
+    private final int size;
 
-    public BoardDTO(char[][] cells) {
+    public BoardDTO(TreeMap<Integer, Character> cells, int size) {
         this.cells = cells;
+        this.size = size;
     }
 
-    public char[][] getCells() {
+    public TreeMap<Integer, Character> getCells() {
         return cells;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     @Override
@@ -18,6 +25,7 @@ public class BoardDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoardDTO boardDTO = (BoardDTO) o;
-        return Arrays.deepEquals(cells, boardDTO.cells);
+        return Objects.equals(cells, boardDTO.cells);
     }
+
 }

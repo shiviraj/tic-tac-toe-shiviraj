@@ -3,13 +3,15 @@ package com.step.shivi_melodyni.game;
 import com.step.shivi_melodyni.dto.BoardDTO;
 import org.junit.Test;
 
+import java.util.TreeMap;
+
 import static org.junit.Assert.*;
 
 public class BoardTest {
     @Test
     public void shouldGiveBoardDTO() {
         Board board = new Board(2);
-        BoardDTO boardDTO = new BoardDTO(new char[2][2]);
+        BoardDTO boardDTO = new BoardDTO(new TreeMap<>(), 2);
         assertEquals(boardDTO, board.toDTO());
     }
 
@@ -17,9 +19,9 @@ public class BoardTest {
     public void shouldPlaceTheSymbolAtGivenCellNo() {
         Board board = new Board(2);
         board.place(1,'X' );
-        char[][] cells = new char[2][2];
-        cells[0][0] = 'X';
-        BoardDTO boardDTO = new BoardDTO(cells);
+        TreeMap<Integer, Character> cells = new TreeMap<>();
+        cells.put(1, 'X');
+        BoardDTO boardDTO = new BoardDTO(cells, 2);
         assertEquals(boardDTO, board.toDTO());
     }
 
@@ -45,7 +47,7 @@ public class BoardTest {
     @Test
     public void shouldGiveSizeOfBoard() {
         Board board = new Board(2);
-        assertEquals(4, board.size());
+        assertEquals(2, board.size());
     }
 
     @Test
@@ -82,7 +84,9 @@ public class BoardTest {
         board.place(4, 'O');
         board.place(7, 'O');
         assertTrue(board.anyColumnContainsSameSymbol());
-    }    @Test
+    }
+
+    @Test
     public void shouldGiveTrueIfSecondColumnHaveSameSymbols() {
         Board board = new Board(3);
         board.place(2, 'O');

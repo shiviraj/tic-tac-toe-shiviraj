@@ -5,7 +5,9 @@ import com.step.shivi_melodyni.dto.PlayerDTO;
 import com.step.shivi_melodyni.io.Reader;
 import com.step.shivi_melodyni.io.Writer;
 
-public class ConsolePresenter{
+import java.util.TreeMap;
+
+public class ConsolePresenter {
     private final Writer writer;
     private final Reader reader;
 
@@ -15,27 +17,23 @@ public class ConsolePresenter{
     }
 
     public void presentBoard(BoardDTO boardDTO) {
-        char [][] board = boardDTO.getCells();
+        TreeMap<Integer, Character> board = boardDTO.getCells();
         StringBuilder stringBuilder = new StringBuilder();
-        int cellNo = 1;
-
-        for (char[] row : board) {
-            for (char cellChar : row) {
-                if (cellChar == '\u0000') {
-                    stringBuilder.append(cellNo).append("  ");
-                } else {
-                    stringBuilder.append(cellChar).append("  ");
-                }
-                cellNo++;
+        int size = boardDTO.getSize();
+        for (int i = 1; i <= size * size; i++) {
+            if(board.containsKey(i)){
+                stringBuilder.append(board.get(i)).append("  ");
+            }else{
+                stringBuilder.append(i).append("  ");
             }
-            stringBuilder.append("\n");
+            stringBuilder.append(i % size == 0 ? "\n" : "");
         }
         this.writer.write(String.valueOf(stringBuilder));
     }
 
     public void presentPlayer(PlayerDTO player1DTO, PlayerDTO player2DTO) {
         String divider = "---------------------";
-        String player = String.format("%s\n%s:%c %s:%c\n", divider , player1DTO.getName(), player1DTO.getSymbol(),
+        String player = String.format("%s\n%s:%c %s:%c\n", divider, player1DTO.getName(), player1DTO.getSymbol(),
             player2DTO.getName(), player2DTO.getSymbol());
         this.writer.write(player);
     }
@@ -48,7 +46,7 @@ public class ConsolePresenter{
             return new Integer(input);
         } catch (NumberFormatException e) {
             String invalidCellError = String.format("*ERROR* Invalid Cell %s, Please provide a vacant cell between " +
-                "1-%d\n", input, size);
+                "1-%d\n", input, size * size);
             this.writer.write(invalidCellError);
             return getPlayerMove(currentPlayerDTO, size);
         }
@@ -56,7 +54,7 @@ public class ConsolePresenter{
 
     public void presentCellNotVacantError(int cellNo, int size) {
         this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
-            cellNo, size));
+            cellNo,  size * size));
     }
 
     public void declareGameDraw() {

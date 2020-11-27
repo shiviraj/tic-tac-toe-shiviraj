@@ -2,6 +2,7 @@ things to modify
     game constructor
     player class
     thinking of a higher data structure for board
+    send size * size as board size
    --done--  move hasGameWon into game class
 
 

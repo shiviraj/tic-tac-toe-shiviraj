@@ -6,6 +6,8 @@ import com.step.shivi_melodyni.io.Reader;
 import com.step.shivi_melodyni.io.Writer;
 import org.junit.Test;
 
+import java.util.TreeMap;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -14,7 +16,7 @@ public class ConsolePresenterTest {
     public void shouldPresentCellNoOnEmptyTicTacToeBoard() {
         Writer writer = mock(Writer.class);
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "4");
-        BoardDTO boardDTO = new BoardDTO(new char[2][2]);
+        BoardDTO boardDTO = new BoardDTO(new TreeMap<>(), 2);
 
         consolePresenter.presentBoard(boardDTO);
 
@@ -25,13 +27,13 @@ public class ConsolePresenterTest {
     public void shouldPresentSymbolOnTicTacToeBoardIfCellIsPlayed() {
         Writer writer = mock(Writer.class);
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "4");
-        char[][] cells = new char[2][2];
-        cells[0][1] = 'X';
-        BoardDTO boardDTO = new BoardDTO(cells);
+        TreeMap<Integer, Character> cells = new TreeMap<>();
+        cells.put(1, 'X');
+        BoardDTO boardDTO = new BoardDTO(cells, 2);
 
         consolePresenter.presentBoard(boardDTO);
 
-        verify(writer).write("1  X  \n3  4  \n");
+        verify(writer).write("X  2  \n3  4  \n");
     }
 
     @Test
@@ -68,7 +70,7 @@ public class ConsolePresenterTest {
         when(reader.readLine()).thenReturn("A").thenReturn("1");
 
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, reader);
-        int playerMove = consolePresenter.getPlayerMove(new PlayerDTO("Ramesh", 'X'), 9);
+        int playerMove = consolePresenter.getPlayerMove(new PlayerDTO("Ramesh", 'X'), 3);
 
         verify(writer, times(2)).write("Ramesh's turn. Please enter the cell number > ");
         verify(writer).write("*ERROR* Invalid Cell A, Please provide a vacant cell between 1-9\n");
@@ -82,7 +84,7 @@ public class ConsolePresenterTest {
 
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, ()->"1");
 
-        consolePresenter.presentCellNotVacantError(1, 9);
+        consolePresenter.presentCellNotVacantError(1, 3);
 
         verify(writer).write("*ERROR* Cell 1 is Not Vacant, Please provide a vacant cell between 1-9\n");
     }

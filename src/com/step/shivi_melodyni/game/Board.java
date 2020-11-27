@@ -2,76 +2,83 @@ package com.step.shivi_melodyni.game;
 
 import com.step.shivi_melodyni.dto.BoardDTO;
 
-public class Board {
-    static class Move {
-        int row, col;
-    }
+import java.util.TreeMap;
 
-    private final char[][] cells;
+public class Board {
+    private final int boardSize;
+
+    private final TreeMap<Integer, Character> cells;
 
     public Board(int boardSize) {
-        this.cells = new char[boardSize][boardSize];
+        this.boardSize = boardSize;
+        this.cells = new TreeMap<>();
     }
 
     public int size() {
-        return this.cells.length * this.cells.length;
+        return this.boardSize;
     }
 
     public BoardDTO toDTO() {
-        return new BoardDTO(this.cells);
+        TreeMap<Integer,Character> treeMap = new TreeMap<>(this.cells);
+        return new BoardDTO(treeMap, this.size());
     }
 
-    private Move findRowColNo(int cellNo) {
-        Move move = new Move();
-        move.row = (cellNo - 1) / this.cells.length;
-        move.col = (cellNo - 1) % this.cells.length;
-        return move;
-    }
 
     public void place(int cellNo, char symbol) {
-        Move move = findRowColNo(cellNo);
-        this.cells[move.row][move.col] = symbol;
+        this.cells.put(cellNo, symbol);
     }
 
     public boolean isValidMove(int cellNo) {
-        if (cellNo < 1 || cellNo > this.size()) {
+        if (cellNo < 1 || cellNo > (this.size() * this.size())) {
             return false;
         }
-        Move move = findRowColNo(cellNo);
-        return this.cells[move.row][move.col] == '\u0000';
+        return !this.cells.containsKey(cellNo);
     }
 
-
     public boolean anyDiagonalContainsSameSymbol() {
-        char[] diagonal1 = new char[this.cells.length];
-        for (int i = 0; i < this.cells.length; i++) {
-            diagonal1[i] = this.cells[i][i];
+        char[] diagonal1 = new char[this.size()];
+        char[] diagonal2 = new char[this.size()];
+        for (int i = 0; i < this.size(); i++) {
+            int cellNo = (i * size() ) + (i + 1);
+            diagonal1[i] = this.cells.getOrDefault(cellNo,'\u0000');
+            int cellNo2 = size() * (i + 1) - i;
+            diagonal2[i] = this.cells.getOrDefault(cellNo2,'\u0000');
         }
-        if (every(diagonal1)) return true;
-
-        char[] diagonal2 = new char[this.cells.length];
-        for (int i = 0; i < this.cells.length; i++) {
-            diagonal2[i] = this.cells[i][this.cells.length - 1 - i];
-        }
-        return every(diagonal2);
+        return every(diagonal1) || every(diagonal2);
     }
 
     public boolean anyColumnContainsSameSymbol() {
-        for (int i = 0; i < this.cells.length; i++) {
-            char[] col = new char[this.cells.length];
-            for (int j = 0; j < this.cells.length; j++) {
-                col[j] = this.cells[j][i];
-            }
+        for (int i = 1; i <= this.size(); i++) {
+            char[] col = getBoardColumn(i);
             if (every(col)) return true;
         }
         return false;
     }
 
+    private char[] getBoardColumn(int i) {
+        char[] col = new char[this.size()];
+        for (int j = 0; j < this.size(); j++) {
+            int cellNo = size() * j + i;
+            col[j] = this.cells.getOrDefault(cellNo, '\u0000');
+        }
+        return col;
+    }
+
     public boolean anyRowsContainsSameSymbol() {
-        for (char[] row : this.cells) {
-            if (every(row)) return true;
+        for (int i = 0; i < this.size(); i++) {
+            char[] col = getBoardRow(i);
+            if (every(col)) return true;
         }
         return false;
+    }
+
+    private char[] getBoardRow(int i) {
+        char[] col = new char[this.size()];
+        for (int j = 0; j < this.size(); j++) {
+            int cellNo = size() * i + j + 1;
+            col[j] = this.cells.getOrDefault(cellNo, '\u0000');
+        }
+        return col;
     }
 
     private boolean every(char[] symbol) {
