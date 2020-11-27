@@ -1,8 +1,8 @@
 things to modify
     game constructor
     player class
-    move hasGameWon into game class
     thinking of a higher data structure for board
+   --done--  move hasGameWon into game class
 
 
 feature

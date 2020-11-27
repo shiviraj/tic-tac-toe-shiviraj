@@ -41,11 +41,8 @@ public class Board {
         return this.cells[move.row][move.col] == '\u0000';
     }
 
-    public boolean hasGameWon() {
-        return anyRowsContainsSameSymbol() || anyColumnContainsSameSymbol() || anyDiagonalContainsSameSymbol();
-    }
 
-    private boolean anyDiagonalContainsSameSymbol() {
+    public boolean anyDiagonalContainsSameSymbol() {
         char[] diagonal1 = new char[this.cells.length];
         for (int i = 0; i < this.cells.length; i++) {
             diagonal1[i] = this.cells[i][i];
@@ -59,7 +56,7 @@ public class Board {
         return every(diagonal2);
     }
 
-    private boolean anyColumnContainsSameSymbol() {
+    public boolean anyColumnContainsSameSymbol() {
         for (int i = 0; i < this.cells.length; i++) {
             char[] col = new char[this.cells.length];
             for (int j = 0; j < this.cells.length; j++) {
@@ -70,7 +67,7 @@ public class Board {
         return false;
     }
 
-    private boolean anyRowsContainsSameSymbol() {
+    public boolean anyRowsContainsSameSymbol() {
         for (char[] row : this.cells) {
             if (every(row)) return true;
         }

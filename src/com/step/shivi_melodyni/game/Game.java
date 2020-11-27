@@ -42,10 +42,17 @@ public class Game {
     }
 
     private Player checkWinner() {
-        if(this.board.hasGameWon()){
+        if(this.hasGameWon()){
             return this.currentPlayer;
         }
         return null;
+    }
+
+
+    private boolean hasGameWon() {
+        return this.board.anyRowsContainsSameSymbol() ||
+            this.board.anyColumnContainsSameSymbol() ||
+            this.board.anyDiagonalContainsSameSymbol();
     }
 
     private int getPlayerMove(ConsolePresenter presenter) {
