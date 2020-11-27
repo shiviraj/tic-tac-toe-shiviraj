@@ -51,8 +51,7 @@ public class Game {
 
 
     private boolean hasGameWon() {
-        return this.board.anyRowsContainsSameSymbol() ||
-            this.board.anyColumnContainsSameSymbol() ||
+            return this.board.anyRowOrColumnContainsSameSymbol() ||
             this.board.anyDiagonalContainsSameSymbol();
     }
 

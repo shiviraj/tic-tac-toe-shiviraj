@@ -56,7 +56,7 @@ public class BoardTest {
         board.place(1,'X');
         board.place(2,'X');
         board.place(3,'X');
-        assertTrue(board.anyRowsContainsSameSymbol());
+        assertTrue(board.anyRowOrColumnContainsSameSymbol());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class BoardTest {
         board.place(4,'X');
         board.place(5,'X');
         board.place(6,'X');
-        assertTrue(board.anyRowsContainsSameSymbol());
+        assertTrue(board.anyRowOrColumnContainsSameSymbol());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class BoardTest {
         board.place(7, 'O');
         board.place(8, 'O');
         board.place(9, 'O');
-        assertTrue(board.anyRowsContainsSameSymbol());
+        assertTrue(board.anyRowOrColumnContainsSameSymbol());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class BoardTest {
         board.place(1, 'O');
         board.place(4, 'O');
         board.place(7, 'O');
-        assertTrue(board.anyColumnContainsSameSymbol());
+        assertTrue(board.anyRowOrColumnContainsSameSymbol());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class BoardTest {
         board.place(2, 'O');
         board.place(5, 'O');
         board.place(8, 'O');
-        assertTrue(board.anyColumnContainsSameSymbol());
+        assertTrue(board.anyRowOrColumnContainsSameSymbol());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class BoardTest {
         board.place(3, 'O');
         board.place(6, 'O');
         board.place(9, 'O');
-        assertTrue(board.anyColumnContainsSameSymbol());
+        assertTrue(board.anyRowOrColumnContainsSameSymbol());
     }
 
     @Test

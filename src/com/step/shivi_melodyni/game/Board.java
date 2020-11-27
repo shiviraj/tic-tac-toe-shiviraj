@@ -19,7 +19,7 @@ public class Board {
     }
 
     public BoardDTO toDTO() {
-        TreeMap<Integer,Character> treeMap = new TreeMap<>(this.cells);
+        TreeMap<Integer, Character> treeMap = new TreeMap<>(this.cells);
         return new BoardDTO(treeMap, this.boardSize);
     }
 
@@ -36,54 +36,47 @@ public class Board {
     }
 
     public boolean anyDiagonalContainsSameSymbol() {
-        char[] diagonal1 = new char[this.boardSize];
-        char[] diagonal2 = new char[this.boardSize];
+        int[] diagonal1 = new int[this.boardSize];
+        int[] diagonal2 = new int[this.boardSize];
         for (int i = 0; i < this.boardSize; i++) {
-            int cellNo = (i * this.boardSize ) + (i + 1);
-            diagonal1[i] = this.cells.getOrDefault(cellNo,'\u0000');
-            int cellNo2 = this.boardSize * (i + 1) - i;
-            diagonal2[i] = this.cells.getOrDefault(cellNo2,'\u0000');
+            diagonal1[i] = (i * this.boardSize) + (i + 1);
+            diagonal2[i] = this.boardSize * (i + 1) - i;
         }
         return every(diagonal1) || every(diagonal2);
     }
 
-    public boolean anyColumnContainsSameSymbol() {
-        for (int i = 1; i <= this.boardSize; i++) {
-            char[] col = getBoardColumn(i);
-            if (every(col)) return true;
-        }
-        return false;
-    }
-
-    private char[] getBoardColumn(int i) {
-        char[] col = new char[this.boardSize];
-        for (int j = 0; j < this.boardSize; j++) {
-            int cellNo = this.boardSize * j + i;
-            col[j] = this.cells.getOrDefault(cellNo, '\u0000');
-        }
-        return col;
-    }
-
-    public boolean anyRowsContainsSameSymbol() {
+    public boolean anyRowOrColumnContainsSameSymbol() {
         for (int i = 0; i < this.boardSize; i++) {
-            char[] col = getBoardRow(i);
-            if (every(col)) return true;
+            int[] col = getBoardColumn(i);
+            int[] row = getBoardRow(i);
+            if (every(col) || every(row)) return true;
         }
         return false;
     }
 
-    private char[] getBoardRow(int i) {
-        char[] col = new char[this.boardSize];
+    private int[] getBoardColumn(int i) {
+        int[] row = new int[this.boardSize];
         for (int j = 0; j < this.boardSize; j++) {
-            int cellNo = this.boardSize * i + j + 1;
-            col[j] = this.cells.getOrDefault(cellNo, '\u0000');
+            row[j] = this.boardSize * j + i + 1;
+        }
+        return row;
+    }
+    
+    private int[] getBoardRow(int i) {
+        int[] col = new int[this.boardSize];
+        for (int j = 0; j < this.boardSize; j++) {
+            col[j] = this.boardSize * i + j + 1;
         }
         return col;
     }
 
-    private boolean every(char[] symbol) {
-        for (char c : symbol) {
-            if (c != symbol[0] || c == '\u0000') return false;
+    private boolean every(int[] cellNo) {
+        char symbol = this.cells.getOrDefault(cellNo[0], '\u0000');
+        for (int c : cellNo) {
+            Character currentSymbol = this.cells.getOrDefault(c, '\u0000');
+            if (currentSymbol == '\u0000' || currentSymbol != symbol) {
+                return false;
+            }
         }
         return true;
     }
