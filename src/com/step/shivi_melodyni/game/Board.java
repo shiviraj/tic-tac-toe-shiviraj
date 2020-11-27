@@ -2,6 +2,7 @@ package com.step.shivi_melodyni.game;
 
 import com.step.shivi_melodyni.dto.BoardDTO;
 
+import java.util.Arrays;
 import java.util.TreeMap;
 
 public class Board {
@@ -42,14 +43,14 @@ public class Board {
             diagonal1[i] = (i * this.boardSize) + (i + 1);
             diagonal2[i] = this.boardSize * (i + 1) - i;
         }
-        return every(diagonal1) || every(diagonal2);
+        return doesEveryCellContainSame(diagonal1) || doesEveryCellContainSame(diagonal2);
     }
 
     public boolean anyRowOrColumnContainsSameSymbol() {
         for (int i = 0; i < this.boardSize; i++) {
             int[] col = getBoardColumn(i);
             int[] row = getBoardRow(i);
-            if (every(col) || every(row)) return true;
+            if (doesEveryCellContainSame(col) || doesEveryCellContainSame(row)) return true;
         }
         return false;
     }
@@ -70,15 +71,11 @@ public class Board {
         return col;
     }
 
-    private boolean every(int[] cellNo) {
+    private boolean doesEveryCellContainSame(int[] cellNo) {
         char symbol = this.cells.getOrDefault(cellNo[0], '\u0000');
-        for (int c : cellNo) {
-            Character currentSymbol = this.cells.getOrDefault(c, '\u0000');
-            if (currentSymbol == '\u0000' || currentSymbol != symbol) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.stream(cellNo).allMatch((key)-> {
+            char currentSymbol = this.cells.getOrDefault(key, '\u0000');
+            return  currentSymbol != '\u0000' && currentSymbol == symbol;
+        });
     }
-
 }
