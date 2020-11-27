@@ -44,7 +44,6 @@ public class GameTest {
         Game game = new Game("Ramesh", "Suresh", 2);
         game.run(new ConsolePresenter(writer, reader));
 
-
         inOrder.verify(writer).write("1  2  \n3  4  \n");
         inOrder.verify(writer).write("X  2  \n3  4  \n");
         inOrder.verify(writer).write("*ERROR* Cell 1 is Not Vacant, Please provide a vacant cell between 1-4\n");

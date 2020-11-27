@@ -47,7 +47,7 @@ public class BoardTest {
     @Test
     public void shouldGiveSizeOfBoard() {
         Board board = new Board(2);
-        assertEquals(2, board.size());
+        assertEquals(4, board.size());
     }
 
     @Test

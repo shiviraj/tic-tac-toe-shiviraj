@@ -26,8 +26,7 @@ public class Game {
     public void run(ConsolePresenter presenter) {
         int i = 1;
         presentPlayerAndBoard(presenter);
-        int size = this.board.size();
-        while (i <= size * size) {
+        while (i <=this.board.size()) {
             int playerMove = getPlayerMove(presenter);
             this.board.place(playerMove, this.currentPlayer.getSymbol());
             presentPlayerAndBoard(presenter);

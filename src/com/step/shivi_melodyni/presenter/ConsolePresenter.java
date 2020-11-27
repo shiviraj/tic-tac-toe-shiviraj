@@ -46,7 +46,7 @@ public class ConsolePresenter {
             return new Integer(input);
         } catch (NumberFormatException e) {
             String invalidCellError = String.format("*ERROR* Invalid Cell %s, Please provide a vacant cell between " +
-                "1-%d\n", input, size * size);
+                "1-%d\n", input, size);
             this.writer.write(invalidCellError);
             return getPlayerMove(currentPlayerDTO, size);
         }
@@ -54,7 +54,7 @@ public class ConsolePresenter {
 
     public void presentCellNotVacantError(int cellNo, int size) {
         this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
-            cellNo,  size * size));
+            cellNo,  size));
     }
 
     public void declareGameDraw() {

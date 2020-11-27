@@ -15,12 +15,12 @@ public class Board {
     }
 
     public int size() {
-        return this.boardSize;
+        return this.boardSize * this.boardSize;
     }
 
     public BoardDTO toDTO() {
         TreeMap<Integer,Character> treeMap = new TreeMap<>(this.cells);
-        return new BoardDTO(treeMap, this.size());
+        return new BoardDTO(treeMap, this.boardSize);
     }
 
 
@@ -29,26 +29,26 @@ public class Board {
     }
 
     public boolean isValidMove(int cellNo) {
-        if (cellNo < 1 || cellNo > (this.size() * this.size())) {
+        if (cellNo < 1 || cellNo > this.size()) {
             return false;
         }
         return !this.cells.containsKey(cellNo);
     }
 
     public boolean anyDiagonalContainsSameSymbol() {
-        char[] diagonal1 = new char[this.size()];
-        char[] diagonal2 = new char[this.size()];
-        for (int i = 0; i < this.size(); i++) {
-            int cellNo = (i * size() ) + (i + 1);
+        char[] diagonal1 = new char[this.boardSize];
+        char[] diagonal2 = new char[this.boardSize];
+        for (int i = 0; i < this.boardSize; i++) {
+            int cellNo = (i * this.boardSize ) + (i + 1);
             diagonal1[i] = this.cells.getOrDefault(cellNo,'\u0000');
-            int cellNo2 = size() * (i + 1) - i;
+            int cellNo2 = this.boardSize * (i + 1) - i;
             diagonal2[i] = this.cells.getOrDefault(cellNo2,'\u0000');
         }
         return every(diagonal1) || every(diagonal2);
     }
 
     public boolean anyColumnContainsSameSymbol() {
-        for (int i = 1; i <= this.size(); i++) {
+        for (int i = 1; i <= this.boardSize; i++) {
             char[] col = getBoardColumn(i);
             if (every(col)) return true;
         }
@@ -56,16 +56,16 @@ public class Board {
     }
 
     private char[] getBoardColumn(int i) {
-        char[] col = new char[this.size()];
-        for (int j = 0; j < this.size(); j++) {
-            int cellNo = size() * j + i;
+        char[] col = new char[this.boardSize];
+        for (int j = 0; j < this.boardSize; j++) {
+            int cellNo = this.boardSize * j + i;
             col[j] = this.cells.getOrDefault(cellNo, '\u0000');
         }
         return col;
     }
 
     public boolean anyRowsContainsSameSymbol() {
-        for (int i = 0; i < this.size(); i++) {
+        for (int i = 0; i < this.boardSize; i++) {
             char[] col = getBoardRow(i);
             if (every(col)) return true;
         }
@@ -73,9 +73,9 @@ public class Board {
     }
 
     private char[] getBoardRow(int i) {
-        char[] col = new char[this.size()];
-        for (int j = 0; j < this.size(); j++) {
-            int cellNo = size() * i + j + 1;
+        char[] col = new char[this.boardSize];
+        for (int j = 0; j < this.boardSize; j++) {
+            int cellNo = this.boardSize * i + j + 1;
             col[j] = this.cells.getOrDefault(cellNo, '\u0000');
         }
         return col;

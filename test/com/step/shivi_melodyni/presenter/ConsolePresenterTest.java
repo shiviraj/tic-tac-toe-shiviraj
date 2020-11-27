@@ -70,7 +70,7 @@ public class ConsolePresenterTest {
         when(reader.readLine()).thenReturn("A").thenReturn("1");
 
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, reader);
-        int playerMove = consolePresenter.getPlayerMove(new PlayerDTO("Ramesh", 'X'), 3);
+        int playerMove = consolePresenter.getPlayerMove(new PlayerDTO("Ramesh", 'X'), 9);
 
         verify(writer, times(2)).write("Ramesh's turn. Please enter the cell number > ");
         verify(writer).write("*ERROR* Invalid Cell A, Please provide a vacant cell between 1-9\n");
@@ -84,7 +84,7 @@ public class ConsolePresenterTest {
 
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, ()->"1");
 
-        consolePresenter.presentCellNotVacantError(1, 3);
+        consolePresenter.presentCellNotVacantError(1, 9);
 
         verify(writer).write("*ERROR* Cell 1 is Not Vacant, Please provide a vacant cell between 1-9\n");
     }
