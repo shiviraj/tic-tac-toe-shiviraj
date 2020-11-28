@@ -46,6 +46,10 @@ class
         - playMoveOn(index, symbol)
         - checkWinner (think of a better name)
 
+    VirtualBoard
+        isAnyMoveLeft
+        removeCell
+
      Player
         name
         symbol

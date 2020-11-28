@@ -1,13 +1,13 @@
 package com.step.shivi_melodyni.game;
 
+import com.step.shivi_melodyni.ai.VirtualGameBoard;
 import com.step.shivi_melodyni.dto.BoardDTO;
 
 import java.util.TreeMap;
 
 public class Board {
     private final int boardSize;
-
-    private final TreeMap<Integer, Character> cells;
+    protected final TreeMap<Integer, Character> cells;
 
     public Board(int boardSize) {
         this.boardSize = boardSize;
@@ -23,6 +23,11 @@ public class Board {
         return new BoardDTO(treeMap, this.boardSize);
     }
 
+    public VirtualGameBoard cloneBoard(){
+        VirtualGameBoard board = new VirtualGameBoard(this.boardSize);
+        this.cells.forEach(board::place);
+        return board;
+    }
 
     public void place(int cellNo, char symbol) {
         this.cells.put(cellNo, symbol);

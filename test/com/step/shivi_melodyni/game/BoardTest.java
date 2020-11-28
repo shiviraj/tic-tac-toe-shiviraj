@@ -121,4 +121,14 @@ public class BoardTest {
         board.place(7, 'O');
         assertTrue(board.anyDiagonalContainsSameSymbol());
     }
+
+    @Test
+    public void shouldCloneTheBoard() {
+        Board board = new Board(3);
+        board.place(3, 'O');
+        board.place(5, 'O');
+        BoardDTO boardDTO = board.toDTO();
+
+        assertEquals(boardDTO, board.cloneBoard().toDTO());
+    }
 }

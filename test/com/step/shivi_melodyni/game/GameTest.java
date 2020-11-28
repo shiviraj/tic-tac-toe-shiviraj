@@ -17,7 +17,7 @@ public class GameTest {
 
         when(reader.readLine()).thenReturn("1", "2" ,"3", "4", "5","7","6","9","8");
 
-        Game game = new Game("Ramesh", "Suresh", 3);
+        Game game = new Game("Ramesh", 3);
         game.run(new ConsolePresenter(writer, reader));
 
         inOrder.verify(writer).write("1  2  3  \n4  5  6  \n7  8  9  \n");
@@ -41,7 +41,7 @@ public class GameTest {
 
         when(reader.readLine()).thenReturn("1", "1","2","3");
 
-        Game game = new Game("Ramesh", "Suresh", 2);
+        Game game = new Game("Ramesh", 2);
         game.run(new ConsolePresenter(writer, reader));
 
         inOrder.verify(writer).write("1  2  \n3  4  \n");
