@@ -11,21 +11,29 @@ public class Game {
     private final Board board;
     private final HashMap<Player, Player> nextPlayer;
     private final AIPlayer aiPlayer;
-    private final Player opponent;
     private Player currentPlayer;
 
-    public Game(String playerName, int boardSize) {
+    public Game(Player player, Player opponent, int boardSize) {
         this.nextPlayer = new HashMap<>(2);
+        this.aiPlayer = null;
+        this.nextPlayer.put(player, opponent);
+        this.nextPlayer.put(opponent, player);
 
-        this.opponent = new Player(playerName, 'X');
-        this.aiPlayer = new AIPlayer('O');
-
-        this.nextPlayer.put(opponent, this.aiPlayer);
-        this.nextPlayer.put(this.aiPlayer, opponent);
-
-        this.currentPlayer = opponent;
+        this.currentPlayer = player;
         this.board = new Board(boardSize);
     }
+
+    public Game(Player player, AIPlayer aiPlayer, int boardSize) {
+        this.nextPlayer = new HashMap<>(2);
+        this.aiPlayer = aiPlayer;
+
+        this.nextPlayer.put(player, aiPlayer);
+        this.nextPlayer.put(aiPlayer, player);
+
+        this.currentPlayer = player;
+        this.board = new Board(boardSize);
+    }
+
 
     public void run(ConsolePresenter presenter) {
         int i = 1;
@@ -52,7 +60,6 @@ public class Game {
         return null;
     }
 
-
     private boolean hasGameWon() {
         return this.board.anyRowOrColumnContainsSameSymbol() ||
             this.board.anyDiagonalContainsSameSymbol();
@@ -60,7 +67,7 @@ public class Game {
 
     private int getPlayerMove(Presenter presenter) {
         if (this.currentPlayer == this.aiPlayer) {
-            return this.aiPlayer.playBestMove(this.board, opponent);
+            return this.aiPlayer.playBestMove(this.board, this.nextPlayer.get(aiPlayer));
         }
         int boardSize = this.board.size();
         int playerMove = presenter.getPlayerMove(this.currentPlayer.toDTO(), boardSize);

@@ -1,5 +1,6 @@
 package com.step.shivi_melodyni.game;
 
+import com.step.shivi_melodyni.ai.AIPlayer;
 import com.step.shivi_melodyni.io.Reader;
 import com.step.shivi_melodyni.io.Writer;
 import com.step.shivi_melodyni.presenter.ConsolePresenter;
@@ -17,7 +18,7 @@ public class GameTest {
 
         when(reader.readLine()).thenReturn("1", "2" ,"3", "4", "5","7","6","9","8");
 
-        Game game = new Game("Ramesh", 3);
+        Game game = new Game(new Player("Ramesh",'X'), new Player("Suresh",'O'), 3);
         game.run(new ConsolePresenter(writer, reader));
 
         inOrder.verify(writer).write("1  2  3  \n4  5  6  \n7  8  9  \n");
@@ -41,12 +42,30 @@ public class GameTest {
 
         when(reader.readLine()).thenReturn("1", "1","2","3");
 
-        Game game = new Game("Ramesh", 2);
+        Game game = new Game(new Player("Ramesh",'X'), new Player("Suresh",'O'), 2);
         game.run(new ConsolePresenter(writer, reader));
 
         inOrder.verify(writer).write("1  2  \n3  4  \n");
         inOrder.verify(writer).write("X  2  \n3  4  \n");
         inOrder.verify(writer).write("*ERROR* Cell 1 is Not Vacant, Please provide a vacant cell between 1-4\n");
+        inOrder.verify(writer).write("X  O  \n3  4  \n");
+        inOrder.verify(writer).write("X  O  \nX  4  \n");
+        inOrder.verify(writer).write("Ramesh wins\n");
+    }
+
+    @Test
+    public void shouldRunTicTacToeWithAI() {
+        Writer writer = mock(Writer.class);
+        Reader reader = mock(Reader.class);
+        InOrder inOrder = inOrder(writer);
+
+        when(reader.readLine()).thenReturn("1", "3");
+
+        Game game = new Game(new Player("Ramesh",'X'), new AIPlayer('O'), 2);
+        game.run(new ConsolePresenter(writer, reader));
+
+        inOrder.verify(writer).write("1  2  \n3  4  \n");
+        inOrder.verify(writer).write("X  2  \n3  4  \n");
         inOrder.verify(writer).write("X  O  \n3  4  \n");
         inOrder.verify(writer).write("X  O  \nX  4  \n");
         inOrder.verify(writer).write("Ramesh wins\n");
