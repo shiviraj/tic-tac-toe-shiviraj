@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class TicTacToe {
     public static void main(String[] args) {
-        int boardSize = 2;
+        int boardSize = 3;
         String player1Name = "Human";
 
         AIPlayer aiPlayer = new AIPlayer('O');
