@@ -2,9 +2,9 @@ package com.step.shivi_melodyni.ttt.dto;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class PlayerDTOTest {
+public class HumanPlayerDTOTest {
     @Test
     public void shouldGivePlayerName() {
         PlayerDTO playerDTO = new PlayerDTO("Ramesh", 'X');

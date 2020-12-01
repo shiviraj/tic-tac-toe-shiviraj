@@ -1,6 +1,7 @@
 package com.step.shivi_melodyni.ttt.model;
 
 import com.step.shivi_melodyni.ttt.dto.GameDTO;
+import com.step.shivi_melodyni.ttt.model.player.Player;
 import com.step.shivi_melodyni.ttt.presenter.Presenter;
 
 import java.util.HashMap;

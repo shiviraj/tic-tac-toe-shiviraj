@@ -49,12 +49,14 @@ public class ConsolePresenter implements Presenter {
 
     @Override
     public void declareGameDraw(GameDTO gameDTO) {
+        presentPlayers(gameDTO.getPlayer1DTO(), gameDTO.getPlayer2DTO());
         this.presentBoard(gameDTO.getBoardDTO());
         this.writer.write("Game ended in a Draw\n");
     }
 
     @Override
     public void declareWinner(PlayerDTO winnerDTO, GameDTO gameDTO) {
+        presentPlayers(gameDTO.getPlayer1DTO(), gameDTO.getPlayer2DTO());
         this.presentBoard(gameDTO.getBoardDTO());
         this.writer.write(String.format("%s wins\n", winnerDTO.getName()));
     }

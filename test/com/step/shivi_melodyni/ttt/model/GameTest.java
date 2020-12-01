@@ -2,6 +2,7 @@ package com.step.shivi_melodyni.ttt.model;
 
 import com.step.shivi_melodyni.ttt.io.Reader;
 import com.step.shivi_melodyni.ttt.io.Writer;
+import com.step.shivi_melodyni.ttt.model.player.HumanPlayer;
 import com.step.shivi_melodyni.ttt.presenter.ConsolePresenter;
 import org.junit.Test;
 import org.mockito.InOrder;
@@ -15,9 +16,9 @@ public class GameTest {
         Reader reader = mock(Reader.class);
         InOrder inOrder = inOrder(writer);
 
-        when(reader.readLine()).thenReturn("1", "2" ,"3", "4", "5","7","6","9","8");
+        when(reader.readLine()).thenReturn("1", "2", "3", "4", "5", "7", "6", "9", "8");
 
-        Game game = new Game(new Player("Ramesh",'X'), new Player("Suresh",'O'), 3);
+        Game game = new Game(new HumanPlayer("Ramesh", 'X'), new HumanPlayer("Suresh", 'O'), 3);
         game.run(new ConsolePresenter(writer, reader));
 
         inOrder.verify(writer).write("1  2  3  \n4  5  6  \n7  8  9  \n");
@@ -39,9 +40,9 @@ public class GameTest {
         Reader reader = mock(Reader.class);
         InOrder inOrder = inOrder(writer);
 
-        when(reader.readLine()).thenReturn("1", "1","2","3");
+        when(reader.readLine()).thenReturn("1", "1", "2", "3");
 
-        Game game = new Game(new Player("Ramesh",'X'), new Player("Suresh",'O'), 2);
+        Game game = new Game(new HumanPlayer("Ramesh", 'X'), new HumanPlayer("Suresh", 'O'), 2);
         game.run(new ConsolePresenter(writer, reader));
 
         inOrder.verify(writer).write("1  2  \n3  4  \n");
