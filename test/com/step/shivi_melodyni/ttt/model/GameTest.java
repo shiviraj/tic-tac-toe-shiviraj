@@ -1,6 +1,5 @@
 package com.step.shivi_melodyni.ttt.model;
 
-import com.step.shivi_melodyni.ttt.ai.AIPlayer;
 import com.step.shivi_melodyni.ttt.io.Reader;
 import com.step.shivi_melodyni.ttt.io.Writer;
 import com.step.shivi_melodyni.ttt.presenter.ConsolePresenter;
@@ -53,21 +52,4 @@ public class GameTest {
         inOrder.verify(writer).write("Ramesh wins\n");
     }
 
-    @Test
-    public void shouldRunTicTacToeWithAI() {
-        Writer writer = mock(Writer.class);
-        Reader reader = mock(Reader.class);
-        InOrder inOrder = inOrder(writer);
-
-        when(reader.readLine()).thenReturn("1", "3");
-
-        Game game = new Game(new Player("Ramesh",'X'), new AIPlayer('O'), 2);
-        game.run(new ConsolePresenter(writer, reader));
-
-        inOrder.verify(writer).write("1  2  \n3  4  \n");
-        inOrder.verify(writer).write("X  2  \n3  4  \n");
-        inOrder.verify(writer).write("X  O  \n3  4  \n");
-        inOrder.verify(writer).write("X  O  \nX  4  \n");
-        inOrder.verify(writer).write("Ramesh wins\n");
-    }
 }

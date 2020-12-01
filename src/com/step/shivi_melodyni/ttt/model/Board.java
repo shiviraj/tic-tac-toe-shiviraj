@@ -30,8 +30,12 @@ public class Board {
         return board;
     }
 
-    public void place(int cellNo, char symbol) {
-        this.cells.put(cellNo, symbol);
+    public boolean place(int cellNo, char symbol) {
+        boolean validMove = isValidMove(cellNo);
+        if(validMove){
+            this.cells.put(cellNo, symbol);
+        }
+        return validMove;
     }
 
     public boolean isValidMove(int cellNo) {

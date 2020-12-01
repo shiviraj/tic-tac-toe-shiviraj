@@ -1,9 +1,7 @@
 package com.step.shivi_melodyni.ttt.presenter;
 
-import com.step.shivi_melodyni.ttt.dto.BoardDTO;
-import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
-import com.step.shivi_melodyni.ttt.io.Reader;
-import com.step.shivi_melodyni.ttt.io.Writer;
+import com.step.shivi_melodyni.ttt.dto.*;
+import com.step.shivi_melodyni.ttt.io.*;
 
 import java.util.TreeMap;
 
@@ -17,7 +15,36 @@ public class ConsolePresenter implements Presenter {
     }
 
     @Override
-    public void presentBoard(BoardDTO boardDTO) {
+    public int presentGameAndGetPlayerMove(GameDTO gameDTO) {
+        BoardDTO boardDTO = gameDTO.getBoardDTO();
+        presentPlayers(gameDTO.getPlayer1DTO(), gameDTO.getPlayer2DTO());
+        presentBoard(boardDTO);
+        return getPlayerMove(gameDTO.getCurrentPlayerDTO(), boardDTO.getSize());
+    }
+
+    @Override
+    public int presentCellNotVacantErrorAndGetPlayerMove(GameDTO gameDTO, int cellNo) {
+        PlayerDTO currentPlayerDTO = gameDTO.getCurrentPlayerDTO();
+        int size = gameDTO.getBoardDTO().getSize() ;
+        this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
+            cellNo, size * size));
+        return getPlayerMove(currentPlayerDTO, size);
+    }
+
+    @Override
+    public void declareGameDraw(GameDTO gameDTO) {
+        this.presentBoard(gameDTO.getBoardDTO());
+        this.writer.write("Game ended in a Draw\n");
+    }
+
+    @Override
+    public void declareWinner(PlayerDTO winnerDTO, GameDTO gameDTO) {
+        this.presentBoard(gameDTO.getBoardDTO());
+        this.writer.write(String.format("%s wins\n", winnerDTO.getName()));
+    }
+
+
+    private void presentBoard(BoardDTO boardDTO) {
         TreeMap<Integer, Character> board = boardDTO.getCells();
         StringBuilder stringBuilder = new StringBuilder();
         int size = boardDTO.getSize();
@@ -29,45 +56,33 @@ public class ConsolePresenter implements Presenter {
             }
             stringBuilder.append(i % size == 0 ? "\n" : "");
         }
-        this.writer.write(String.valueOf(stringBuilder));
+        this.writer.write(stringBuilder.toString());
     }
 
-    @Override
-    public void presentPlayers(PlayerDTO player1DTO, PlayerDTO player2DTO) {
+
+    private void presentPlayers(PlayerDTO player1DTO, PlayerDTO player2DTO) {
         String divider = "---------------------";
         String player = String.format("%s\n%s:%c %s:%c\n", divider, player1DTO.getName(), player1DTO.getSymbol(),
             player2DTO.getName(), player2DTO.getSymbol());
         this.writer.write(player);
     }
 
-    @Override
-    public int getPlayerMove(PlayerDTO currentPlayerDTO, int size) {
+    private int getPlayerMove(PlayerDTO currentPlayerDTO, int size) {
         String promptMsg = String.format("%s's turn. Please enter the cell number > ", currentPlayerDTO.getName());
         this.writer.write(promptMsg);
         String input = this.reader.readLine();
         try {
-            return new Integer(input);
+            int playerMove = new Integer(input);
+            if(playerMove < 1 || playerMove > size * size){
+                throw new NumberFormatException();
+            }
+            return playerMove;
         } catch (NumberFormatException e) {
             String invalidCellError = String.format("*ERROR* Invalid Cell %s, Please provide a vacant cell between " +
-                "1-%d\n", input, size);
+                "1-%d\n", input, size * size);
             this.writer.write(invalidCellError);
             return getPlayerMove(currentPlayerDTO, size);
         }
     }
 
-    @Override
-    public void presentCellNotVacantError(int cellNo, int size) {
-        this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
-            cellNo, size));
-    }
-
-    @Override
-    public void declareGameDraw() {
-        this.writer.write("Game ended in a Draw\n");
-    }
-
-    @Override
-    public void declareWinner(PlayerDTO winnerDTO) {
-        this.writer.write(String.format("%s wins\n", winnerDTO.getName()));
-    }
 }

@@ -1,7 +1,7 @@
 package com.step.shivi_melodyni.ttt.model;
 
 import com.step.shivi_melodyni.ttt.ai.AIPlayer;
-import com.step.shivi_melodyni.ttt.presenter.ConsolePresenter;
+import com.step.shivi_melodyni.ttt.dto.GameDTO;
 import com.step.shivi_melodyni.ttt.presenter.Presenter;
 
 import java.util.HashMap;
@@ -34,23 +34,29 @@ public class Game {
         this.board = new Board(boardSize);
     }
 
-
-    public void run(ConsolePresenter presenter) {
+    public void run(Presenter presenter) {
         int i = 1;
-        presentPlayerAndBoard(presenter);
         while (i <= this.board.size()) {
-            int playerMove = getPlayerMove(presenter);
-            this.board.place(playerMove, this.currentPlayer.getSymbol());
-            presentPlayerAndBoard(presenter);
+            int playerMove = presenter.presentGameAndGetPlayerMove(this.toDTO());
+            this.placeMove(playerMove, presenter);
             Player winner = checkWinner();
             if (winner != null) {
-                presenter.declareWinner(winner.toDTO());
+                presenter.declareWinner(winner.toDTO(), this.toDTO());
                 return;
             }
             this.currentPlayer = this.nextPlayer.get(this.currentPlayer);
             i++;
         }
-        presenter.declareGameDraw();
+        presenter.declareGameDraw(this.toDTO());
+    }
+
+    private void placeMove(int playerMove, Presenter presenter) {
+
+        boolean isPlaced = this.board.place(playerMove, this.currentPlayer.getSymbol());
+        if(!isPlaced){
+          int newMove = presenter.presentCellNotVacantErrorAndGetPlayerMove(this.toDTO(), playerMove);
+          this.placeMove(newMove, presenter);
+        }
     }
 
     private Player checkWinner() {
@@ -65,25 +71,10 @@ public class Game {
             this.board.anyDiagonalContainsSameSymbol();
     }
 
-    private int getPlayerMove(Presenter presenter) {
-        if (this.currentPlayer == this.aiPlayer) {
-            return this.aiPlayer.playBestMove(this.board, this.nextPlayer.get(aiPlayer));
-        }
-        int boardSize = this.board.size();
-        int playerMove = presenter.getPlayerMove(this.currentPlayer.toDTO(), boardSize);
-        if (!this.board.isValidMove(playerMove)) {
-            presenter.presentCellNotVacantError(playerMove, boardSize);
-            return getPlayerMove(presenter);
-        }
-        return playerMove;
-    }
-
-    private void presentPlayerAndBoard(Presenter presenter) {
+    private GameDTO toDTO() {
         Iterator<Player> iterator = this.nextPlayer.keySet().iterator();
-        Player opponent = iterator.next();
-        Player aiPlayer = iterator.next();
-        presenter.presentPlayers(opponent.toDTO(), aiPlayer.toDTO());
-        presenter.presentBoard(this.board.toDTO());
+        Player player1 = iterator.next();
+        Player player2 = iterator.next();
+        return new GameDTO(this.board.toDTO(), player1.toDTO(), player2.toDTO(), this.currentPlayer.toDTO());
     }
-
 }

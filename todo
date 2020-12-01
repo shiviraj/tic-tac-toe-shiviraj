@@ -1,10 +1,23 @@
 things to modify
+ --done-- Presenter's contract
+ --done-- packageNames
+
     game constructor
-    player class
+    player class,
+    ai Player knows board
+    Game shouldn't know about ai player
+
+    Class should be less chatty
+    Player name should be known to Presenter
+
+    Board size should be odd number
+    Board Data structure
+    1. look all the methods acc. to board size of 3
+    fix test for the board size of 3
+
    --partially done-- thinking of a higher data structure for board
    --done-- send size * size as board size
    --done--  move hasGameWon into game class
-
 
 feature
     --done-- 1. presenting the board -
