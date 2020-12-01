@@ -1,9 +1,9 @@
-package com.step.shivi_melodyni.presenter;
+package com.step.shivi_melodyni.ttt.presenter;
 
-import com.step.shivi_melodyni.dto.BoardDTO;
-import com.step.shivi_melodyni.dto.PlayerDTO;
-import com.step.shivi_melodyni.io.Reader;
-import com.step.shivi_melodyni.io.Writer;
+import com.step.shivi_melodyni.ttt.dto.BoardDTO;
+import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
+import com.step.shivi_melodyni.ttt.io.Reader;
+import com.step.shivi_melodyni.ttt.io.Writer;
 import org.junit.Test;
 
 import java.util.TreeMap;

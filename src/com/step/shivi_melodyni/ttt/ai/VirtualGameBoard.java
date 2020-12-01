@@ -1,6 +1,6 @@
-package com.step.shivi_melodyni.ai;
+package com.step.shivi_melodyni.ttt.ai;
 
-import com.step.shivi_melodyni.game.Board;
+import com.step.shivi_melodyni.ttt.model.Board;
 
 public class VirtualGameBoard extends Board {
     public VirtualGameBoard(int boardSize) {

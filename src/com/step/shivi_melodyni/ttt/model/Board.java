@@ -1,7 +1,7 @@
-package com.step.shivi_melodyni.game;
+package com.step.shivi_melodyni.ttt.model;
 
-import com.step.shivi_melodyni.ai.VirtualGameBoard;
-import com.step.shivi_melodyni.dto.BoardDTO;
+import com.step.shivi_melodyni.ttt.ai.VirtualGameBoard;
+import com.step.shivi_melodyni.ttt.dto.BoardDTO;
 
 import java.util.Arrays;
 import java.util.TreeMap;

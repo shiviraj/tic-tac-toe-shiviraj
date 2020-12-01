@@ -1,9 +1,9 @@
-package com.step.shivi_melodyni.game;
+package com.step.shivi_melodyni.ttt.model;
 
-import com.step.shivi_melodyni.ai.AIPlayer;
-import com.step.shivi_melodyni.io.Reader;
-import com.step.shivi_melodyni.io.Writer;
-import com.step.shivi_melodyni.presenter.ConsolePresenter;
+import com.step.shivi_melodyni.ttt.ai.AIPlayer;
+import com.step.shivi_melodyni.ttt.io.Reader;
+import com.step.shivi_melodyni.ttt.io.Writer;
+import com.step.shivi_melodyni.ttt.presenter.ConsolePresenter;
 import org.junit.Test;
 import org.mockito.InOrder;
 

@@ -1,7 +1,7 @@
-package com.step.shivi_melodyni.ai;
+package com.step.shivi_melodyni.ttt.ai;
 
-import com.step.shivi_melodyni.game.Board;
-import com.step.shivi_melodyni.game.Player;
+import com.step.shivi_melodyni.ttt.model.Board;
+import com.step.shivi_melodyni.ttt.model.Player;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

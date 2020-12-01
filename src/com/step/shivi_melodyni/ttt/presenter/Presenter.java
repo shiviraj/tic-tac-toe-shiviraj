@@ -1,7 +1,7 @@
-package com.step.shivi_melodyni.presenter;
+package com.step.shivi_melodyni.ttt.presenter;
 
-import com.step.shivi_melodyni.dto.BoardDTO;
-import com.step.shivi_melodyni.dto.PlayerDTO;
+import com.step.shivi_melodyni.ttt.dto.BoardDTO;
+import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
 
 public interface Presenter {
     void presentBoard(BoardDTO boardDTO);

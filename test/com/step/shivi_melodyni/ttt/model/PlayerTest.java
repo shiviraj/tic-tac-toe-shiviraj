@@ -1,6 +1,6 @@
-package com.step.shivi_melodyni.game;
+package com.step.shivi_melodyni.ttt.model;
 
-import com.step.shivi_melodyni.dto.PlayerDTO;
+import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: com.step.shivi_melodyni.TicTacToe
+Main-Class: com.step.shivi_melodyni.ttt.TicTacToe
 

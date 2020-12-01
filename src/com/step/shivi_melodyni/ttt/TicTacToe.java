@@ -1,9 +1,9 @@
-package com.step.shivi_melodyni;
+package com.step.shivi_melodyni.ttt;
 
-import com.step.shivi_melodyni.ai.AIPlayer;
-import com.step.shivi_melodyni.game.Player;
-import com.step.shivi_melodyni.presenter.ConsolePresenter;
-import com.step.shivi_melodyni.game.Game;
+import com.step.shivi_melodyni.ttt.ai.AIPlayer;
+import com.step.shivi_melodyni.ttt.model.Player;
+import com.step.shivi_melodyni.ttt.presenter.ConsolePresenter;
+import com.step.shivi_melodyni.ttt.model.Game;
 
 import java.util.Scanner;
 

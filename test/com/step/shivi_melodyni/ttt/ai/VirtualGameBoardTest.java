@@ -1,4 +1,4 @@
-package com.step.shivi_melodyni.ai;
+package com.step.shivi_melodyni.ttt.ai;
 
 import org.junit.Test;
 

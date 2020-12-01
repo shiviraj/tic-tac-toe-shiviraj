@@ -1,4 +1,4 @@
-package com.step.shivi_melodyni.dto;
+package com.step.shivi_melodyni.ttt.dto;
 
 import org.junit.Test;
 
