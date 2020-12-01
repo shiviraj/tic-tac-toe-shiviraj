@@ -1,9 +1,10 @@
 package com.step.shivi_melodyni.ttt.presenter;
 
-import com.step.shivi_melodyni.ttt.dto.*;
-import com.step.shivi_melodyni.ttt.io.*;
-
-import java.util.TreeMap;
+import com.step.shivi_melodyni.ttt.dto.BoardDTO;
+import com.step.shivi_melodyni.ttt.dto.GameDTO;
+import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
+import com.step.shivi_melodyni.ttt.io.Reader;
+import com.step.shivi_melodyni.ttt.io.Writer;
 
 public class ConsolePresenter implements Presenter {
     private final Writer writer;
@@ -19,15 +20,15 @@ public class ConsolePresenter implements Presenter {
         BoardDTO boardDTO = gameDTO.getBoardDTO();
         presentPlayers(gameDTO.getPlayer1DTO(), gameDTO.getPlayer2DTO());
         presentBoard(boardDTO);
-        return getPlayerMove(gameDTO.getCurrentPlayerDTO(), boardDTO.getSize());
+        return getPlayerMove(gameDTO.getCurrentPlayerDTO(), boardDTO.getNoOfCells());
     }
 
     @Override
     public int presentCellNotVacantErrorAndGetPlayerMove(GameDTO gameDTO, int cellNo) {
         PlayerDTO currentPlayerDTO = gameDTO.getCurrentPlayerDTO();
-        int size = gameDTO.getBoardDTO().getSize() ;
+        int size = gameDTO.getBoardDTO().getNoOfCells();
         this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
-            cellNo, size * size));
+            cellNo, size));
         return getPlayerMove(currentPlayerDTO, size);
     }
 
@@ -43,22 +44,21 @@ public class ConsolePresenter implements Presenter {
         this.writer.write(String.format("%s wins\n", winnerDTO.getName()));
     }
 
-
     private void presentBoard(BoardDTO boardDTO) {
-        TreeMap<Integer, Character> board = boardDTO.getCells();
+        char[] board = boardDTO.getCells();
         StringBuilder stringBuilder = new StringBuilder();
-        int size = boardDTO.getSize();
-        for (int i = 1; i <= size * size; i++) {
-            if (board.containsKey(i)) {
-                stringBuilder.append(board.get(i)).append("  ");
+        int size = board.length;
+        for (int i = 0; i < size; i++) {
+            char symbol = board[i];
+            if (symbol != '\u0000') {
+                stringBuilder.append(symbol).append("  ");
             } else {
-                stringBuilder.append(i).append("  ");
+                stringBuilder.append(i + 1).append("  ");
             }
-            stringBuilder.append(i % size == 0 ? "\n" : "");
+            stringBuilder.append((i + 1) % Math.sqrt(size) == 0 ? "\n" : "");
         }
         this.writer.write(stringBuilder.toString());
     }
-
 
     private void presentPlayers(PlayerDTO player1DTO, PlayerDTO player2DTO) {
         String divider = "---------------------";
@@ -73,13 +73,13 @@ public class ConsolePresenter implements Presenter {
         String input = this.reader.readLine();
         try {
             int playerMove = new Integer(input);
-            if(playerMove < 1 || playerMove > size * size){
+            if (playerMove < 1 || playerMove > size) {
                 throw new NumberFormatException();
             }
             return playerMove;
         } catch (NumberFormatException e) {
             String invalidCellError = String.format("*ERROR* Invalid Cell %s, Please provide a vacant cell between " +
-                "1-%d\n", input, size * size);
+                "1-%d\n", input, size);
             this.writer.write(invalidCellError);
             return getPlayerMove(currentPlayerDTO, size);
         }

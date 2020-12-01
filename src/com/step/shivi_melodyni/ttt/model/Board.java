@@ -4,15 +4,14 @@ import com.step.shivi_melodyni.ttt.ai.VirtualGameBoard;
 import com.step.shivi_melodyni.ttt.dto.BoardDTO;
 
 import java.util.Arrays;
-import java.util.TreeMap;
 
 public class Board {
     private final int boardSize;
-    protected final TreeMap<Integer, Character> cells;
+    protected final char[] cells;
 
     public Board(int boardSize) {
         this.boardSize = boardSize;
-        this.cells = new TreeMap<>();
+        this.cells = new char[boardSize * boardSize];
     }
 
     public int size() {
@@ -20,20 +19,21 @@ public class Board {
     }
 
     public BoardDTO toDTO() {
-        TreeMap<Integer, Character> treeMap = new TreeMap<>(this.cells);
-        return new BoardDTO(treeMap, this.boardSize);
+        return new BoardDTO(this.cells.clone());
     }
 
-    public VirtualGameBoard cloneBoard(){
+    public VirtualGameBoard createVirtualBoard() {
         VirtualGameBoard board = new VirtualGameBoard(this.boardSize);
-        this.cells.forEach(board::place);
+        for (int i = 0; i < this.cells.length; i++) {
+            board.place(i + 1, this.cells[i]);
+        }
         return board;
     }
 
     public boolean place(int cellNo, char symbol) {
         boolean validMove = isValidMove(cellNo);
-        if(validMove){
-            this.cells.put(cellNo, symbol);
+        if (validMove) {
+            this.cells[cellNo - 1] = symbol;
         }
         return validMove;
     }
@@ -42,7 +42,7 @@ public class Board {
         if (cellNo < 1 || cellNo > this.size()) {
             return false;
         }
-        return !this.cells.containsKey(cellNo);
+        return this.cells[cellNo - 1] == '\u0000';
     }
 
     public boolean anyDiagonalContainsSameSymbol() {
@@ -71,7 +71,7 @@ public class Board {
         }
         return row;
     }
-    
+
     private int[] getBoardRow(int i) {
         int[] col = new int[this.boardSize];
         for (int j = 0; j < this.boardSize; j++) {
@@ -81,10 +81,11 @@ public class Board {
     }
 
     private boolean doesEveryCellContainSame(int[] cellNo) {
-        char symbol = this.cells.getOrDefault(cellNo[0], '\u0000');
-        return Arrays.stream(cellNo).allMatch((key)-> {
-            char currentSymbol = this.cells.getOrDefault(key, '\u0000');
-            return  currentSymbol != '\u0000' && currentSymbol == symbol;
+        char symbol = this.cells[cellNo[0] - 1];
+        return Arrays.stream(cellNo).allMatch((key) -> {
+            char currentSymbol = this.cells[key - 1];
+            return currentSymbol != '\u0000' && currentSymbol == symbol;
         });
     }
+
 }

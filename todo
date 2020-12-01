@@ -2,6 +2,9 @@ things to modify
  --done-- Presenter's contract
  --done-- packageNames
 
+ --done-- Board Data structure
+    Board size should be odd number
+
     game constructor
     player class,
     ai Player knows board
@@ -10,8 +13,6 @@ things to modify
     Class should be less chatty
     Player name should be known to Presenter
 
-    Board size should be odd number
-    Board Data structure
     1. look all the methods acc. to board size of 3
     fix test for the board size of 3
 

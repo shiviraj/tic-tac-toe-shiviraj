@@ -3,25 +3,23 @@ package com.step.shivi_melodyni.ttt.model;
 import com.step.shivi_melodyni.ttt.dto.BoardDTO;
 import org.junit.Test;
 
-import java.util.TreeMap;
-
 import static org.junit.Assert.*;
 
 public class BoardTest {
     @Test
     public void shouldGiveBoardDTO() {
         Board board = new Board(2);
-        BoardDTO boardDTO = new BoardDTO(new TreeMap<>(), 2);
+        BoardDTO boardDTO = new BoardDTO(new char[4]);
         assertEquals(boardDTO, board.toDTO());
     }
 
     @Test
     public void shouldPlaceTheSymbolAtGivenCellNo() {
         Board board = new Board(2);
-        board.place(1,'X' );
-        TreeMap<Integer, Character> cells = new TreeMap<>();
-        cells.put(1, 'X');
-        BoardDTO boardDTO = new BoardDTO(cells, 2);
+        board.place(1, 'X');
+        char[] cells = new char[4];
+        cells[0] = 'X';
+        BoardDTO boardDTO = new BoardDTO(cells);
         assertEquals(boardDTO, board.toDTO());
     }
 
@@ -53,18 +51,18 @@ public class BoardTest {
     @Test
     public void shouldGiveTrueIfFirstRowsHaveSameSymbols() {
         Board board = new Board(3);
-        board.place(1,'X');
-        board.place(2,'X');
-        board.place(3,'X');
+        board.place(1, 'X');
+        board.place(2, 'X');
+        board.place(3, 'X');
         assertTrue(board.anyRowOrColumnContainsSameSymbol());
     }
 
     @Test
     public void shouldGiveTrueIfSecondRowsHaveSameSymbols() {
         Board board = new Board(3);
-        board.place(4,'X');
-        board.place(5,'X');
-        board.place(6,'X');
+        board.place(4, 'X');
+        board.place(5, 'X');
+        board.place(6, 'X');
         assertTrue(board.anyRowOrColumnContainsSameSymbol());
     }
 
@@ -129,6 +127,6 @@ public class BoardTest {
         board.place(5, 'O');
         BoardDTO boardDTO = board.toDTO();
 
-        assertEquals(boardDTO, board.cloneBoard().toDTO());
+        assertEquals(boardDTO, board.createVirtualBoard().toDTO());
     }
 }

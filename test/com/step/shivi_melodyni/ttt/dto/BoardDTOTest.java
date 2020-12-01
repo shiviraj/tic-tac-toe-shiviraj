@@ -2,21 +2,20 @@ package com.step.shivi_melodyni.ttt.dto;
 
 import org.junit.Test;
 
-import java.util.TreeMap;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 public class BoardDTOTest {
     @Test
     public void shouldEquatesTwoEqualBoardDTO() {
-        BoardDTO board1DTO = new BoardDTO(new TreeMap<>(), 2);
-        BoardDTO board2DTO = new BoardDTO(new TreeMap<>(), 2);
+        BoardDTO board1DTO = new BoardDTO(new char[2]);
+        BoardDTO board2DTO = new BoardDTO(new char[2]);
         assertEquals(board1DTO, board2DTO);
     }
 
     @Test
     public void shouldGiveCellsOfBoard() {
-        BoardDTO board1DTO = new BoardDTO(new TreeMap<>(), 4);
-        assertEquals(new TreeMap<>(), board1DTO.getCells());
+        BoardDTO board1DTO = new BoardDTO(new char[9]);
+        assertArrayEquals(new char[9], board1DTO.getCells());
     }
 }

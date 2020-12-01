@@ -9,7 +9,7 @@ public class AIPlayer extends Player {
     }
 
     public int playBestMove(Board board, Player opponent) {
-        VirtualGameBoard virtualBoard = board.cloneBoard();
+        VirtualGameBoard virtualBoard = board.createVirtualBoard();
         return this.findBestMove(virtualBoard, opponent);
     }
 

@@ -5,11 +5,7 @@ import com.step.shivi_melodyni.ttt.dto.GameDTO;
 import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
 import com.step.shivi_melodyni.ttt.io.Reader;
 import com.step.shivi_melodyni.ttt.io.Writer;
-import com.step.shivi_melodyni.ttt.model.Game;
-import com.step.shivi_melodyni.ttt.model.Player;
 import org.junit.Test;
-
-import java.util.TreeMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -22,9 +18,9 @@ public class ConsolePresenterTest {
         when(reader.readLine()).thenReturn("2");
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, reader);
 
-        TreeMap<Integer, Character> cells = new TreeMap<>();
-        cells.put(1,'X');
-        BoardDTO boardDTO = new BoardDTO(cells, 2);
+        char[] cells = new char[4];
+        cells[0] = 'X';
+        BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
         GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
@@ -34,21 +30,18 @@ public class ConsolePresenterTest {
         verify(writer).write("Ramesh's turn. Please enter the cell number > ");
         verify(writer).write("X  2  \n3  4  \n");
 
-        assertEquals(2,playerMove);
+        assertEquals(2, playerMove);
     }
-
-
-
 
     @Test
     public void shouldAskPlayerMoveAgainAfterPresentingInvalidCellError() {
         Writer writer = mock(Writer.class);
         Reader reader = mock(Reader.class);
-        when(reader.readLine()).thenReturn("A", "99","2");
+        when(reader.readLine()).thenReturn("A", "99", "2");
 
-        TreeMap<Integer, Character> cells = new TreeMap<>();
-        cells.put(1,'X');
-        BoardDTO boardDTO = new BoardDTO(cells, 3);
+        char[] cells = new char[9];
+        cells[0] = 'X';
+        BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
         GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
@@ -69,9 +62,9 @@ public class ConsolePresenterTest {
         Reader reader = mock(Reader.class);
         when(reader.readLine()).thenReturn("2");
 
-        TreeMap<Integer, Character> cells = new TreeMap<>();
-        cells.put(1,'X');
-        BoardDTO boardDTO = new BoardDTO(cells, 3);
+        char[] cells = new char[9];
+        cells[0] = 'X';
+        BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
         GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
@@ -89,23 +82,17 @@ public class ConsolePresenterTest {
     public void shouldPresentBoardAndDeclareGameDraw() {
         Writer writer = mock(Writer.class);
 
-        TreeMap<Integer, Character> cells = new TreeMap<>();
-        cells.put(1,'X');
-        cells.put(2,'O');
-        cells.put(3,'X');
-        cells.put(4,'O');
-        cells.put(5,'X');
-        cells.put(7,'O');
-        cells.put(6,'X');
-        cells.put(9,'O');
-        cells.put(8,'X');
+        char[] cells = {
+            'X', 'O', 'X',
+            'O', 'X', 'X',
+            'O', 'X', 'O'};
 
-        BoardDTO boardDTO = new BoardDTO(cells, 3);
+        BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
         GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
 
-        ConsolePresenter consolePresenter = new ConsolePresenter(writer, ()->"2");
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "2");
         consolePresenter.declareGameDraw(gameDTO);
 
         verify(writer).write("X  O  X  \nO  X  X  \nO  X  O  \n");
@@ -116,34 +103,23 @@ public class ConsolePresenterTest {
     public void shouldPresentBoardAndWinner() {
         Writer writer = mock(Writer.class);
 
-        TreeMap<Integer, Character> cells = new TreeMap<>();
-        cells.put(1,'X');
-        cells.put(4,'O');
-        cells.put(2,'X');
-        cells.put(5,'O');
-        cells.put(3,'X');
+        char[] cells = new char[9];
+        cells[0] = 'X';
+        cells[3] = 'O';
+        cells[1] = 'X';
+        cells[4] = 'O';
+        cells[2] = 'X';
 
-        BoardDTO boardDTO = new BoardDTO(cells, 3);
+        BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
         GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
 
-        ConsolePresenter consolePresenter = new ConsolePresenter(writer, ()->"2");
-        consolePresenter.declareWinner(player1DTO, gameDTO );
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "2");
+        consolePresenter.declareWinner(player1DTO, gameDTO);
 
         verify(writer).write("X  X  X  \nO  O  6  \n7  8  9  \n");
         verify(writer).write("Ramesh wins\n");
     }
-
-    //    @Test
-//    public void shouldDeclareTheWinner() {
-//        Writer writer = mock(Writer.class);
-//        ConsolePresenter consolePresenter = new ConsolePresenter(writer, ()->"1");
-//
-//        consolePresenter.declareWinner(new PlayerDTO("Ramesh", 'X'), this.toDTO());
-//
-//        verify(writer).write("Ramesh wins\n");
-//    }
-//
 
 }

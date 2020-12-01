@@ -1,6 +1,5 @@
 package com.step.shivi_melodyni.ttt.model;
 
-import com.step.shivi_melodyni.ttt.ai.AIPlayer;
 import com.step.shivi_melodyni.ttt.dto.GameDTO;
 import com.step.shivi_melodyni.ttt.presenter.Presenter;
 
@@ -10,25 +9,12 @@ import java.util.Iterator;
 public class Game {
     private final Board board;
     private final HashMap<Player, Player> nextPlayer;
-    private final AIPlayer aiPlayer;
     private Player currentPlayer;
 
     public Game(Player player, Player opponent, int boardSize) {
         this.nextPlayer = new HashMap<>(2);
-        this.aiPlayer = null;
         this.nextPlayer.put(player, opponent);
         this.nextPlayer.put(opponent, player);
-
-        this.currentPlayer = player;
-        this.board = new Board(boardSize);
-    }
-
-    public Game(Player player, AIPlayer aiPlayer, int boardSize) {
-        this.nextPlayer = new HashMap<>(2);
-        this.aiPlayer = aiPlayer;
-
-        this.nextPlayer.put(player, aiPlayer);
-        this.nextPlayer.put(aiPlayer, player);
 
         this.currentPlayer = player;
         this.board = new Board(boardSize);
@@ -53,9 +39,9 @@ public class Game {
     private void placeMove(int playerMove, Presenter presenter) {
 
         boolean isPlaced = this.board.place(playerMove, this.currentPlayer.getSymbol());
-        if(!isPlaced){
-          int newMove = presenter.presentCellNotVacantErrorAndGetPlayerMove(this.toDTO(), playerMove);
-          this.placeMove(newMove, presenter);
+        if (!isPlaced) {
+            int newMove = presenter.presentCellNotVacantErrorAndGetPlayerMove(this.toDTO(), playerMove);
+            this.placeMove(newMove, presenter);
         }
     }
 
