@@ -16,20 +16,35 @@ public class ConsolePresenter implements Presenter {
     }
 
     @Override
-    public int presentGameAndGetPlayerMove(GameDTO gameDTO) {
+    public void presentGame(GameDTO gameDTO) {
         BoardDTO boardDTO = gameDTO.getBoardDTO();
         presentPlayers(gameDTO.getPlayer1DTO(), gameDTO.getPlayer2DTO());
         presentBoard(boardDTO);
-        return getPlayerMove(gameDTO.getCurrentPlayerDTO(), boardDTO.getNoOfCells());
     }
 
     @Override
-    public int presentCellNotVacantErrorAndGetPlayerMove(GameDTO gameDTO, int cellNo) {
-        PlayerDTO currentPlayerDTO = gameDTO.getCurrentPlayerDTO();
-        int size = gameDTO.getBoardDTO().getNoOfCells();
+    public int getPlayerMove(String name, int size) {
+        String promptMsg = String.format("%s's turn. Please enter the cell number > ", name);
+        this.writer.write(promptMsg);
+        String input = this.reader.readLine();
+        try {
+            int playerMove = new Integer(input);
+            if (playerMove < 1 || playerMove > size) {
+                throw new NumberFormatException();
+            }
+            return playerMove;
+        } catch (NumberFormatException e) {
+            String invalidCellError = String.format("*ERROR* Invalid Cell %s, Please provide a vacant cell between " +
+                "1-%d\n", input, size);
+            this.writer.write(invalidCellError);
+            return getPlayerMove(name, size);
+        }
+    }
+
+    @Override
+    public void presentCellNotVacantError(int move, int size) {
         this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
-            cellNo, size));
-        return getPlayerMove(currentPlayerDTO, size);
+            move, size));
     }
 
     @Override
@@ -65,24 +80,6 @@ public class ConsolePresenter implements Presenter {
         String player = String.format("%s\n%s:%c %s:%c\n", divider, player1DTO.getName(), player1DTO.getSymbol(),
             player2DTO.getName(), player2DTO.getSymbol());
         this.writer.write(player);
-    }
-
-    private int getPlayerMove(PlayerDTO currentPlayerDTO, int size) {
-        String promptMsg = String.format("%s's turn. Please enter the cell number > ", currentPlayerDTO.getName());
-        this.writer.write(promptMsg);
-        String input = this.reader.readLine();
-        try {
-            int playerMove = new Integer(input);
-            if (playerMove < 1 || playerMove > size) {
-                throw new NumberFormatException();
-            }
-            return playerMove;
-        } catch (NumberFormatException e) {
-            String invalidCellError = String.format("*ERROR* Invalid Cell %s, Please provide a vacant cell between " +
-                "1-%d\n", input, size);
-            this.writer.write(invalidCellError);
-            return getPlayerMove(currentPlayerDTO, size);
-        }
     }
 
 }

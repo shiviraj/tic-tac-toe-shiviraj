@@ -23,8 +23,8 @@ public class Game {
     public void run(Presenter presenter) {
         int i = 1;
         while (i <= this.board.size()) {
-            int playerMove = presenter.presentGameAndGetPlayerMove(this.toDTO());
-            this.placeMove(playerMove, presenter);
+            presenter.presentGame(this.toDTO());
+            this.currentPlayer.playMove(board, presenter);
             Player winner = checkWinner();
             if (winner != null) {
                 presenter.declareWinner(winner.toDTO(), this.toDTO());
@@ -34,15 +34,6 @@ public class Game {
             i++;
         }
         presenter.declareGameDraw(this.toDTO());
-    }
-
-    private void placeMove(int playerMove, Presenter presenter) {
-
-        boolean isPlaced = this.board.place(playerMove, this.currentPlayer.getSymbol());
-        if (!isPlaced) {
-            int newMove = presenter.presentCellNotVacantErrorAndGetPlayerMove(this.toDTO(), playerMove);
-            this.placeMove(newMove, presenter);
-        }
     }
 
     private Player checkWinner() {
@@ -61,6 +52,6 @@ public class Game {
         Iterator<Player> iterator = this.nextPlayer.keySet().iterator();
         Player player1 = iterator.next();
         Player player2 = iterator.next();
-        return new GameDTO(this.board.toDTO(), player1.toDTO(), player2.toDTO(), this.currentPlayer.toDTO());
+        return new GameDTO(this.board.toDTO(), player1.toDTO(), player2.toDTO());
     }
 }

@@ -13,10 +13,6 @@ public class BoardDTO {
         return cells;
     }
 
-    public int getNoOfCells() {
-        return this.cells.length;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -12,25 +12,36 @@ import static org.mockito.Mockito.*;
 
 public class ConsolePresenterTest {
     @Test
-    public void shouldPresentGameAndGetPlayerMove() {
+    public void shouldPresentGame() {
         Writer writer = mock(Writer.class);
-        Reader reader = mock(Reader.class);
-        when(reader.readLine()).thenReturn("2");
-        ConsolePresenter consolePresenter = new ConsolePresenter(writer, reader);
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "2");
 
         char[] cells = new char[4];
         cells[0] = 'X';
         BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
-        int playerMove = consolePresenter.presentGameAndGetPlayerMove(gameDTO);
+        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO);
+        consolePresenter.presentGame(gameDTO);
 
         verify(writer).write("---------------------\nRamesh:X Suresh:O\n");
-        verify(writer).write("Ramesh's turn. Please enter the cell number > ");
         verify(writer).write("X  2  \n3  4  \n");
 
+    }
+
+    @Test
+    public void shouldGiveThePlayerMove() {
+        Writer writer = mock(Writer.class);
+        Reader reader = mock(Reader.class);
+        when(reader.readLine()).thenReturn("2");
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, reader);
+
+        int playerMove = consolePresenter.getPlayerMove("Ramesh", 9);
+
+        verify(writer).write("Ramesh's turn. Please enter the cell number > ");
+
         assertEquals(2, playerMove);
+
     }
 
     @Test
@@ -39,15 +50,8 @@ public class ConsolePresenterTest {
         Reader reader = mock(Reader.class);
         when(reader.readLine()).thenReturn("A", "99", "2");
 
-        char[] cells = new char[9];
-        cells[0] = 'X';
-        BoardDTO boardDTO = new BoardDTO(cells);
-        PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
-        PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
-
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, reader);
-        int playerMove = consolePresenter.presentGameAndGetPlayerMove(gameDTO);
+        int playerMove = consolePresenter.getPlayerMove("Ramesh", 9);
 
         verify(writer, times(3)).write("Ramesh's turn. Please enter the cell number > ");
         verify(writer).write("*ERROR* Invalid Cell A, Please provide a vacant cell between 1-9\n");
@@ -59,23 +63,11 @@ public class ConsolePresenterTest {
     @Test
     public void shouldPresentCellNotVacantErrorAndGetPlayerMove() {
         Writer writer = mock(Writer.class);
-        Reader reader = mock(Reader.class);
-        when(reader.readLine()).thenReturn("2");
 
-        char[] cells = new char[9];
-        cells[0] = 'X';
-        BoardDTO boardDTO = new BoardDTO(cells);
-        PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
-        PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
-
-        ConsolePresenter consolePresenter = new ConsolePresenter(writer, reader);
-        int playerMove = consolePresenter.presentCellNotVacantErrorAndGetPlayerMove(gameDTO, 1);
+        ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "1");
+        consolePresenter.presentCellNotVacantError(1, 9);
 
         verify(writer).write("*ERROR* Cell 1 is Not Vacant, Please provide a vacant cell between 1-9\n");
-        verify(writer).write("Ramesh's turn. Please enter the cell number > ");
-
-        assertEquals(2, playerMove);
     }
 
     @Test
@@ -90,7 +82,7 @@ public class ConsolePresenterTest {
         BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
+        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO);
 
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "2");
         consolePresenter.declareGameDraw(gameDTO);
@@ -113,7 +105,7 @@ public class ConsolePresenterTest {
         BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
+        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO);
 
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "2");
         consolePresenter.declareWinner(player1DTO, gameDTO);

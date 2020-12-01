@@ -11,7 +11,7 @@ public class GameDTOTest {
         BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
+        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO);
 
         assertEquals(boardDTO, gameDTO.getBoardDTO());
     }
@@ -22,7 +22,7 @@ public class GameDTOTest {
         BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
+        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO);
 
         assertEquals(player1DTO, gameDTO.getPlayer1DTO());
 
@@ -34,20 +34,10 @@ public class GameDTOTest {
         BoardDTO boardDTO = new BoardDTO(cells);
         PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
         PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
+        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO);
 
         assertEquals(player2DTO, gameDTO.getPlayer2DTO());
 
     }
 
-    @Test
-    public void shouldGiveCurrentPlayerDTO() {
-        char[] cells = new char[9];
-        BoardDTO boardDTO = new BoardDTO(cells);
-        PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
-        PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
-        GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO, player1DTO);
-
-        assertEquals(player1DTO, gameDTO.getCurrentPlayerDTO());
-    }
 }
