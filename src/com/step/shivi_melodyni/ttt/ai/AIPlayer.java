@@ -25,7 +25,7 @@ public class AIPlayer implements Player {
         int bestMove = -1;
 
         for (int i = 1; i <= virtualBoard.size(); i++) {
-            if (virtualBoard.isValidMove(i)) {
+            if (virtualBoard.isEmptyCell(i)) {
                 virtualBoard.place(i, this.symbol);
                 int score = this.minimax(virtualBoard, false);
                 virtualBoard.removeSymbolFromCell(i);
@@ -49,7 +49,7 @@ public class AIPlayer implements Player {
         int bestScore = -1000;
         if (isMaximizing) {
             for (int i = 1; i <= virtualBoard.size(); i++) {
-                if (virtualBoard.isValidMove(i)) {
+                if (virtualBoard.isEmptyCell(i)) {
                     virtualBoard.place(i, this.symbol);
                     int score = this.minimax(virtualBoard, false);
                     virtualBoard.removeSymbolFromCell(i);
@@ -59,7 +59,7 @@ public class AIPlayer implements Player {
         } else {
             bestScore = 1000;
             for (int i = 1; i <= virtualBoard.size(); i++) {
-                if (virtualBoard.isValidMove(i)) {
+                if (virtualBoard.isEmptyCell(i)) {
                     virtualBoard.place(i, 'X');
                     int score = this.minimax(virtualBoard, true);
                     virtualBoard.removeSymbolFromCell(i);

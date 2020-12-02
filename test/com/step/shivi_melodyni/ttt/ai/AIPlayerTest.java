@@ -1,6 +1,7 @@
 package com.step.shivi_melodyni.ttt.ai;
 
 import com.step.shivi_melodyni.ttt.dto.BoardDTO;
+import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
 import com.step.shivi_melodyni.ttt.model.Board;
 import com.step.shivi_melodyni.ttt.presenter.ConsolePresenter;
 import org.junit.Test;
@@ -8,6 +9,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class AIPlayerTest {
+    @Test
+    public void shouldGivePlayerDTO() {
+        AIPlayer aiPlayer = new AIPlayer();
+        PlayerDTO playerDTO = new PlayerDTO("Computer", 'O');
+        assertEquals(playerDTO, aiPlayer.toDTO());
+
+    }
+
     @Test
     public void shouldPlayBestMove() {
         AIPlayer aiPlayer = new AIPlayer();

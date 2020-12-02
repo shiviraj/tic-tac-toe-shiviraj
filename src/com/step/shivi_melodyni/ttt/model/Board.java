@@ -38,7 +38,7 @@ public class Board {
         return validMove;
     }
 
-    public boolean isValidMove(int cellNo) {
+    private boolean isValidMove(int cellNo) {
         if (cellNo < 1 || cellNo > this.size()) {
             return false;
         }

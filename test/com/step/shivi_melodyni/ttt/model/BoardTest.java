@@ -16,30 +16,21 @@ public class BoardTest {
     @Test
     public void shouldPlaceTheSymbolAtGivenCellNo() {
         Board board = new Board(2);
+        assertTrue(board.place(1, 'X'));
+
+    }
+
+    @Test
+    public void shouldNotPlaceTheSymbolIfCellIsNotVacant() {
+        Board board = new Board(2);
         board.place(1, 'X');
-        char[] cells = new char[4];
-        cells[0] = 'X';
-        BoardDTO boardDTO = new BoardDTO(cells);
-        assertEquals(boardDTO, board.toDTO());
+        assertFalse(board.place(1, 'O'));
     }
 
     @Test
-    public void shouldGiveTrueIfCellNoIsVacant() {
+    public void shouldNotPlaceTheSymbolIfCellNoIsOutOfRange() {
         Board board = new Board(2);
-        assertTrue(board.isValidMove(2));
-    }
-
-    @Test
-    public void shouldGiveFalseIfCellNoIsNotVacant() {
-        Board board = new Board(2);
-        board.place(2, 'X');
-        assertFalse(board.isValidMove(2));
-    }
-
-    @Test
-    public void shouldGiveFalseIfCellNoIsInvalid() {
-        Board board = new Board(2);
-        assertFalse(board.isValidMove(15));
+        assertFalse(board.place(10, 'X'));
     }
 
     @Test

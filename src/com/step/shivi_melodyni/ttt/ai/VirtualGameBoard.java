@@ -19,4 +19,8 @@ public class VirtualGameBoard extends Board {
     public void removeSymbolFromCell(int cellNo) {
         this.cells[cellNo - 1] = '\u0000';
     }
+
+    public boolean isEmptyCell(int i) {
+        return this.cells[i - 1] == '\u0000';
+    }
 }

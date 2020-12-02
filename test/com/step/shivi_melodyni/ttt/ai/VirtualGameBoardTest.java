@@ -7,12 +7,25 @@ import static org.junit.Assert.assertTrue;
 
 public class VirtualGameBoardTest {
     @Test
+    public void shouldGiveTrueIfCellIsEmpty() {
+        VirtualGameBoard board = new VirtualGameBoard(2);
+        assertTrue(board.isEmptyCell(1));
+    }
+
+    @Test
+    public void shouldGiveFalseIfCellIsNotEmpty() {
+        VirtualGameBoard board = new VirtualGameBoard(2);
+        board.place(1, 'X');
+        assertFalse(board.isEmptyCell(1));
+    }
+
+    @Test
     public void shouldRemoveSymbolFromGivenCellNo() {
         VirtualGameBoard board = new VirtualGameBoard(2);
         board.place(1, 'X');
-        assertFalse(board.isValidMove(1));
+        assertFalse(board.isEmptyCell(1));
         board.removeSymbolFromCell(1);
-        assertTrue(board.isValidMove(1));
+        assertTrue(board.isEmptyCell(1));
     }
 
     @Test
