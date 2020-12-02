@@ -1,8 +1,7 @@
-package com.step.shivi_melodyni.ttt.ai;
+package com.step.shivi_melodyni.ttt.model.player;
 
 import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
 import com.step.shivi_melodyni.ttt.model.Board;
-import com.step.shivi_melodyni.ttt.model.player.Player;
 import com.step.shivi_melodyni.ttt.presenter.Presenter;
 
 public class AIPlayer implements Player {
@@ -15,12 +14,12 @@ public class AIPlayer implements Player {
 
     @Override
     public void playMove(Board board, Presenter presenter) {
-        VirtualGameBoard virtualBoard = board.createVirtualBoard();
+        Board virtualBoard = board.cloneBoard();
         int move = this.findBestMove(virtualBoard);
         board.place(move, this.symbol);
     }
 
-    private int findBestMove(VirtualGameBoard virtualBoard) {
+    private int findBestMove(Board virtualBoard) {
         int bestScore = -1000;
         int bestMove = -1;
 
@@ -38,7 +37,7 @@ public class AIPlayer implements Player {
         return bestMove;
     }
 
-    private int minimax(VirtualGameBoard virtualBoard, boolean isMaximizing) {
+    private int minimax(Board virtualBoard, boolean isMaximizing) {
         if (virtualBoard.anyRowOrColumnContainsSameSymbol() || virtualBoard.anyDiagonalContainsSameSymbol()) {
             return isMaximizing ? -1 : 1;
         }

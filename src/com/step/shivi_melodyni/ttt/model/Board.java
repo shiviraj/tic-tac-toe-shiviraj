@@ -1,17 +1,21 @@
 package com.step.shivi_melodyni.ttt.model;
 
-import com.step.shivi_melodyni.ttt.ai.VirtualGameBoard;
 import com.step.shivi_melodyni.ttt.dto.BoardDTO;
 
 import java.util.Arrays;
 
 public class Board {
     private final int boardSize;
-    protected final char[] cells;
+    private final char[] cells;
 
     public Board(int boardSize) {
         this.boardSize = boardSize;
         this.cells = new char[boardSize * boardSize];
+    }
+
+    private Board(char[] cells, int boardSize) {
+        this.cells = cells;
+        this.boardSize = boardSize;
     }
 
     public int size() {
@@ -22,12 +26,8 @@ public class Board {
         return new BoardDTO(this.cells.clone());
     }
 
-    public VirtualGameBoard createVirtualBoard() {
-        VirtualGameBoard board = new VirtualGameBoard(this.boardSize);
-        for (int i = 0; i < this.cells.length; i++) {
-            board.place(i + 1, this.cells[i]);
-        }
-        return board;
+    public Board cloneBoard() {
+        return new Board(this.cells.clone(), this.boardSize);
     }
 
     public boolean place(int cellNo, char symbol) {
@@ -43,6 +43,14 @@ public class Board {
             return false;
         }
         return this.cells[cellNo - 1] == '\u0000';
+    }
+
+    public void removeSymbolFromCell(int cellNo) {
+        this.cells[cellNo - 1] = '\u0000';
+    }
+
+    public boolean isEmptyCell(int i) {
+        return this.cells[i - 1] == '\u0000';
     }
 
     public boolean isAnyMoveLeft() {

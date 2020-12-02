@@ -118,6 +118,44 @@ public class BoardTest {
         board.place(5, 'O');
         BoardDTO boardDTO = board.toDTO();
 
-        assertEquals(boardDTO, board.createVirtualBoard().toDTO());
+        assertEquals(boardDTO, board.cloneBoard().toDTO());
+    }
+
+    @Test
+    public void shouldGiveTrueIfCellIsEmpty() {
+        Board board = new Board(2);
+        assertTrue(board.isEmptyCell(1));
+    }
+
+    @Test
+    public void shouldGiveFalseIfCellIsNotEmpty() {
+        Board board = new Board(2);
+        board.place(1, 'X');
+        assertFalse(board.isEmptyCell(1));
+    }
+
+    @Test
+    public void shouldRemoveSymbolFromGivenCellNo() {
+        Board board = new Board(2);
+        board.place(1, 'X');
+        assertFalse(board.isEmptyCell(1));
+        board.removeSymbolFromCell(1);
+        assertTrue(board.isEmptyCell(1));
+    }
+
+    @Test
+    public void shouldGiveTrueIfAnyMoveIsLeft() {
+        Board board = new Board(2);
+        assertTrue(board.isAnyMoveLeft());
+    }
+
+    @Test
+    public void shouldGiveFalseIfNoMoveLeft() {
+        Board board = new Board(2);
+        board.place(1, 'X');
+        board.place(2, 'O');
+        board.place(3, 'O');
+        board.place(4, 'X');
+        assertFalse(board.isAnyMoveLeft());
     }
 }

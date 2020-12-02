@@ -1,7 +1,6 @@
-package com.step.shivi_melodyni.ttt.model;
+package com.step.shivi_melodyni.ttt.model.player;
 
 import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
-import com.step.shivi_melodyni.ttt.model.player.HumanPlayer;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

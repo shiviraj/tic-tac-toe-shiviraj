@@ -1,7 +1,7 @@
 package com.step.shivi_melodyni.ttt;
 
-import com.step.shivi_melodyni.ttt.ai.AIPlayer;
 import com.step.shivi_melodyni.ttt.model.Game;
+import com.step.shivi_melodyni.ttt.model.player.AIPlayer;
 import com.step.shivi_melodyni.ttt.model.player.HumanPlayer;
 import com.step.shivi_melodyni.ttt.model.player.Player;
 import com.step.shivi_melodyni.ttt.presenter.ConsolePresenter;

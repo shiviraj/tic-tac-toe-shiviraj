@@ -5,9 +5,9 @@ things to modify
  --done-- Board Data structure
     (Board size should be odd number)
 
-    HumanPlayer class,
-    ai Player knows board
- --done-- game constructor
+ --done--   HumanPlayer class,
+ --done--   ai Player knows board
+ --done--   game constructor
  --done--   Game shouldn't know about ai HumanPlayer
 
     Class should be less chatty

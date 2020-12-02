@@ -1,4 +1,4 @@
-package com.step.shivi_melodyni.ttt.ai;
+package com.step.shivi_melodyni.ttt.model.player;
 
 import com.step.shivi_melodyni.ttt.dto.BoardDTO;
 import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
