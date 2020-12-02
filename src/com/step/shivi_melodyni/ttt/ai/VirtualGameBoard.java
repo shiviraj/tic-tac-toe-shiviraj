@@ -7,15 +7,6 @@ public class VirtualGameBoard extends Board {
         super(boardSize);
     }
 
-    public boolean isAnyMoveLeft() {
-        for (int i = 0; i < this.size(); i++) {
-            if (this.cells[i] == '\u0000') {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void removeSymbolFromCell(int cellNo) {
         this.cells[cellNo - 1] = '\u0000';
     }

@@ -45,6 +45,15 @@ public class Board {
         return this.cells[cellNo - 1] == '\u0000';
     }
 
+    public boolean isAnyMoveLeft() {
+        for (int i = 0; i < this.size(); i++) {
+            if (this.cells[i] == '\u0000') {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean anyDiagonalContainsSameSymbol() {
         int[] diagonal1 = new int[this.boardSize];
         int[] diagonal2 = new int[this.boardSize];

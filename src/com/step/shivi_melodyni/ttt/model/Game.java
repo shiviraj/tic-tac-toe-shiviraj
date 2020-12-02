@@ -22,26 +22,26 @@ public class Game {
     }
 
     public void run(Presenter presenter) {
-        int i = 1;
-        while (i <= this.board.size()) {
+        while (!this.isGameOver()) {
             presenter.presentGame(this.toDTO());
             this.currentPlayer.playMove(board, presenter);
-            Player winner = checkWinner();
-            if (winner != null) {
-                presenter.declareWinner(winner.toDTO(), this.toDTO());
-                return;
-            }
             this.currentPlayer = this.nextPlayer.get(this.currentPlayer);
-            i++;
         }
-        presenter.declareGameDraw(this.toDTO());
+        declareGameResult(presenter);
     }
 
-    private Player checkWinner() {
-        if (this.hasGameWon()) {
-            return this.currentPlayer;
+    private void declareGameResult(Presenter presenter) {
+        if (hasGameWon()) {
+            Player winner = this.nextPlayer.get(this.currentPlayer);
+            presenter.declareWinner(winner.toDTO(), this.toDTO());
+        } else {
+            presenter.declareGameDraw(this.toDTO());
         }
-        return null;
+
+    }
+
+    private boolean isGameOver() {
+        return this.hasGameWon() || !this.board.isAnyMoveLeft();
     }
 
     private boolean hasGameWon() {
