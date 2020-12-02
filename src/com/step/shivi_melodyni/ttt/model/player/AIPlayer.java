@@ -6,16 +6,18 @@ import com.step.shivi_melodyni.ttt.presenter.Presenter;
 
 public class AIPlayer implements Player {
     private final char symbol = 'O';
+    private final String name = "Computer";
 
     @Override
     public PlayerDTO toDTO() {
-        return new PlayerDTO("Computer", symbol);
+        return new PlayerDTO(this.name, this.symbol);
     }
 
     @Override
     public void playMove(Board board, Presenter presenter) {
         Board virtualBoard = board.cloneBoard();
         int move = this.findBestMove(virtualBoard);
+        presenter.presentComputerMove(this.name, move);
         board.place(move, this.symbol);
     }
 

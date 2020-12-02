@@ -21,7 +21,7 @@ public class HumanPlayer implements Player {
     @Override
     public void playMove(Board board, Presenter presenter) {
         int boardSize = board.size();
-        int move = getPlayerMove(presenter, boardSize);
+        int move = presenter.getPlayerMove(this.name, boardSize);
         boolean isPlaced = board.place(move, this.symbol);
         if (!isPlaced) {
             presenter.presentCellNotVacantError(move, boardSize);
@@ -29,7 +29,4 @@ public class HumanPlayer implements Player {
         }
     }
 
-    private int getPlayerMove(Presenter presenter, int boardSize) {
-        return presenter.getPlayerMove(this.name, boardSize);
-    }
 }

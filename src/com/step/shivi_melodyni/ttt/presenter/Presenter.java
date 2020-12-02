@@ -12,5 +12,7 @@ public interface Presenter {
 
     int getPlayerMove(String name, int boardSize);
 
+    void presentComputerMove(String name, int move);
+
     void presentCellNotVacantError(int move, int boardSize);
 }

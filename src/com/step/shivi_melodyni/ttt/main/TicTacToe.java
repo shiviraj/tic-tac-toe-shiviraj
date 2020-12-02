@@ -1,4 +1,4 @@
-package com.step.shivi_melodyni.ttt;
+package com.step.shivi_melodyni.ttt.main;
 
 import com.step.shivi_melodyni.ttt.model.Game;
 import com.step.shivi_melodyni.ttt.model.player.AIPlayer;

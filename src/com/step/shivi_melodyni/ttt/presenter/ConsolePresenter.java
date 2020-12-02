@@ -42,6 +42,12 @@ public class ConsolePresenter implements Presenter {
     }
 
     @Override
+    public void presentComputerMove(String name, int move) {
+        String promptMsg = String.format("%s's turn. Please enter the cell number > %d\n", name, move);
+        this.writer.write(promptMsg);
+    }
+
+    @Override
     public void presentCellNotVacantError(int move, int size) {
         this.writer.write(String.format("*ERROR* Cell %d is Not Vacant, Please provide a vacant cell between 1-%d\n",
             move, size));
