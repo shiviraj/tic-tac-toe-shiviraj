@@ -27,7 +27,7 @@ public class Game {
     }
 
     private int getNextPlayerIndex() {
-        return (this.currentPlayerIndex + 1) % this.players.length;
+        return 1 - this.currentPlayerIndex;
     }
 
     private void declareGameResult(Presenter presenter) {
