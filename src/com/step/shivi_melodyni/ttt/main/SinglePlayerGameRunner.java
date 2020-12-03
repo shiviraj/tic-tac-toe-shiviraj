@@ -20,6 +20,6 @@ public class SinglePlayerGameRunner {
         Game game = new Game(player, opponent, boardSize);
 
         ConsolePresenter consolePresenter = new ConsolePresenter(System.out::print, new Scanner(System.in)::nextLine);
-        game.run(consolePresenter);
+        game.run(consolePresenter, limit -> (int) (Math.random() * limit));
     }
 }

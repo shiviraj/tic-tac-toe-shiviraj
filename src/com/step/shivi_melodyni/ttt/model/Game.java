@@ -3,41 +3,40 @@ package com.step.shivi_melodyni.ttt.model;
 import com.step.shivi_melodyni.ttt.dto.GameDTO;
 import com.step.shivi_melodyni.ttt.model.player.Player;
 import com.step.shivi_melodyni.ttt.presenter.Presenter;
-
-import java.util.HashMap;
-import java.util.Iterator;
+import com.step.shivi_melodyni.ttt.util.FractionGenerator;
 
 public class Game {
     private final Board board;
-    private final HashMap<Player, Player> nextPlayer;
-    private Player currentPlayer;
+    private final Player[] players;
+    private int currentPlayerIndex;
 
     public Game(Player player, Player opponent, int boardSize) {
-        this.nextPlayer = new HashMap<>(2);
-        this.nextPlayer.put(player, opponent);
-        this.nextPlayer.put(opponent, player);
-
-        this.currentPlayer = player;
+        this.players = new Player[]{player, opponent};
         this.board = new Board(boardSize);
     }
 
-    public void run(Presenter presenter) {
+    public void run(Presenter presenter, FractionGenerator fractionGenerator) {
+        this.currentPlayerIndex = fractionGenerator.generate(this.players.length);
         while (!this.isGameOver()) {
             presenter.presentGame(this.toDTO());
-            this.currentPlayer.playMove(board, presenter);
-            this.currentPlayer = this.nextPlayer.get(this.currentPlayer);
+            Player currentPlayer = this.players[this.currentPlayerIndex];
+            currentPlayer.playMove(board, presenter);
+            this.currentPlayerIndex = getNextPlayerIndex();
         }
         declareGameResult(presenter);
     }
 
+    private int getNextPlayerIndex() {
+        return (this.currentPlayerIndex + 1) % this.players.length;
+    }
+
     private void declareGameResult(Presenter presenter) {
         if (hasGameWon()) {
-            Player winner = this.nextPlayer.get(this.currentPlayer);
+            Player winner = this.players[getNextPlayerIndex()];
             presenter.declareWinner(winner.toDTO(), this.toDTO());
         } else {
             presenter.declareGameDraw(this.toDTO());
         }
-
     }
 
     private boolean isGameOver() {
@@ -50,9 +49,6 @@ public class Game {
     }
 
     private GameDTO toDTO() {
-        Iterator<Player> iterator = this.nextPlayer.keySet().iterator();
-        Player player1 = iterator.next();
-        Player player2 = iterator.next();
-        return new GameDTO(this.board.toDTO(), player1.toDTO(), player2.toDTO());
+        return new GameDTO(this.board.toDTO(), this.players[0].toDTO(), this.players[1].toDTO());
     }
 }
