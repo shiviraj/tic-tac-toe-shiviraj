@@ -6,14 +6,15 @@ import java.util.Arrays;
 
 public class Board {
     private final int boardSize;
-    private final char[] cells;
+    private final Symbol[] cells;
 
     public Board(int boardSize) {
         this.boardSize = boardSize;
-        this.cells = new char[boardSize * boardSize];
+        this.cells = new Symbol[boardSize * boardSize];
+        Arrays.fill(this.cells, Symbol.EMPTY);
     }
 
-    private Board(char[] cells, int boardSize) {
+    private Board(Symbol[] cells, int boardSize) {
         this.cells = cells;
         this.boardSize = boardSize;
     }
@@ -23,14 +24,18 @@ public class Board {
     }
 
     public BoardDTO toDTO() {
-        return new BoardDTO(this.cells.clone());
+        char[] chars = new char[this.cells.length];
+        for (int i = 0; i < this.cells.length; i++) {
+            chars[i] = this.cells[i].toDTO().getSymbol();
+        }
+        return new BoardDTO(chars);
     }
 
     public Board cloneBoard() {
         return new Board(this.cells.clone(), this.boardSize);
     }
 
-    public boolean place(int cellNo, char symbol) {
+    public boolean place(int cellNo, Symbol symbol) {
         boolean validMove = isValidMove(cellNo);
         if (validMove) {
             this.cells[cellNo - 1] = symbol;
@@ -42,20 +47,20 @@ public class Board {
         if (cellNo < 1 || cellNo > this.size()) {
             return false;
         }
-        return this.cells[cellNo - 1] == '\u0000';
+        return this.cells[cellNo - 1].isEmpty();
     }
 
     public void removeSymbolFromCell(int cellNo) {
-        this.cells[cellNo - 1] = '\u0000';
+        this.cells[cellNo - 1] = Symbol.EMPTY;
     }
 
     public boolean isEmptyCell(int i) {
-        return this.cells[i - 1] == '\u0000';
+        return this.cells[i - 1].isEmpty();
     }
 
     public boolean isAnyMoveLeft() {
         for (int i = 0; i < this.size(); i++) {
-            if (this.cells[i] == '\u0000') {
+            if (this.cells[i].isEmpty()) {
                 return true;
             }
         }
@@ -103,10 +108,10 @@ public class Board {
     }
 
     private boolean doesEveryCellContainSame(int[] cellNo) {
-        char symbol = this.cells[cellNo[0] - 1];
+        Symbol symbol = this.cells[cellNo[0] - 1];
         return Arrays.stream(cellNo).allMatch((key) -> {
-            char currentSymbol = this.cells[key - 1];
-            return currentSymbol != '\u0000' && currentSymbol == symbol;
+            Symbol currentSymbol = this.cells[key - 1];
+            return !currentSymbol.isEmpty() && currentSymbol == symbol;
         });
     }
 }

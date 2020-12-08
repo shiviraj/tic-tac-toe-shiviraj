@@ -18,7 +18,7 @@ public class GameTest {
 
         when(reader.readLine()).thenReturn("1", "2", "3", "4", "5", "7", "6", "9", "8");
 
-        Game game = new Game(new HumanPlayer("Ramesh", 'X'), new HumanPlayer("Suresh", 'O'), 3);
+        Game game = new Game(new HumanPlayer("Ramesh", Symbol.CROSS), new HumanPlayer("Suresh", Symbol.ZERO), 3);
         game.run(new ConsolePresenter(writer, reader), limit->0);
 
         inOrder.verify(writer).write("1  2  3  \n4  5  6  \n7  8  9  \n");
@@ -42,7 +42,7 @@ public class GameTest {
 
         when(reader.readLine()).thenReturn("1", "1", "2", "3");
 
-        Game game = new Game(new HumanPlayer("Ramesh", 'X'), new HumanPlayer("Suresh", 'O'), 2);
+        Game game = new Game(new HumanPlayer("Ramesh", Symbol.CROSS), new HumanPlayer("Suresh", Symbol.ZERO), 2);
         game.run(new ConsolePresenter(writer, reader),limit->0);
 
         inOrder.verify(writer).write("1  2  \n3  4  \n");
@@ -61,7 +61,7 @@ public class GameTest {
 
         when(reader.readLine()).thenReturn("1", "2", "3");
 
-        Game game = new Game(new HumanPlayer("Ramesh", 'X'), new HumanPlayer("Suresh", 'O'), 2);
+        Game game = new Game(new HumanPlayer("Ramesh", Symbol.CROSS), new HumanPlayer("Suresh", Symbol.ZERO), 2);
         game.run(new ConsolePresenter(writer, reader),limit->1);
 
         inOrder.verify(writer).write("1  2  \n3  4  \n");

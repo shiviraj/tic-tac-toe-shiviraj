@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class PlayerDTO {
     private final String name;
-    private final char symbol;
+    private final SymbolDTO symbolDTO;
 
-    public PlayerDTO(String name, char symbol) {
+    public PlayerDTO(String name, SymbolDTO symbolDTO) {
         this.name = name;
-        this.symbol = symbol;
+        this.symbolDTO = symbolDTO;
     }
 
     public String getName() {
@@ -16,7 +16,7 @@ public class PlayerDTO {
     }
 
     public char getSymbol() {
-        return this.symbol;
+        return this.symbolDTO.getSymbol();
     }
 
     @Override
@@ -24,8 +24,7 @@ public class PlayerDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PlayerDTO playerDTO = (PlayerDTO) o;
-        return symbol == playerDTO.symbol &&
-            Objects.equals(name, playerDTO.name);
+        return Objects.equals(name, playerDTO.name) &&
+            symbolDTO.equals(playerDTO.symbolDTO);
     }
-
 }

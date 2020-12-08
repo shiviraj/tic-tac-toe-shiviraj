@@ -5,6 +5,7 @@ import com.step.shivi_melodyni.ttt.dto.GameDTO;
 import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
 import com.step.shivi_melodyni.ttt.io.Reader;
 import com.step.shivi_melodyni.ttt.io.Writer;
+import com.step.shivi_melodyni.ttt.model.Symbol;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -19,8 +20,8 @@ public class ConsolePresenterTest {
         char[] cells = new char[4];
         cells[0] = 'X';
         BoardDTO boardDTO = new BoardDTO(cells);
-        PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
-        PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
+        PlayerDTO player1DTO = new PlayerDTO("Ramesh", Symbol.CROSS.toDTO());
+        PlayerDTO player2DTO = new PlayerDTO("Suresh", Symbol.ZERO.toDTO());
         GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO);
         consolePresenter.presentGame(gameDTO);
 
@@ -80,8 +81,8 @@ public class ConsolePresenterTest {
             'O', 'X', 'O'};
 
         BoardDTO boardDTO = new BoardDTO(cells);
-        PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
-        PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
+        PlayerDTO player1DTO = new PlayerDTO("Ramesh", Symbol.CROSS.toDTO());
+        PlayerDTO player2DTO = new PlayerDTO("Suresh", Symbol.ZERO.toDTO());
         GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO);
 
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "2");
@@ -103,8 +104,8 @@ public class ConsolePresenterTest {
         cells[2] = 'X';
 
         BoardDTO boardDTO = new BoardDTO(cells);
-        PlayerDTO player1DTO = new PlayerDTO("Ramesh", 'X');
-        PlayerDTO player2DTO = new PlayerDTO("Suresh", 'O');
+        PlayerDTO player1DTO = new PlayerDTO("Ramesh", Symbol.CROSS.toDTO());
+        PlayerDTO player2DTO = new PlayerDTO("Suresh", Symbol.ZERO.toDTO());
         GameDTO gameDTO = new GameDTO(boardDTO, player1DTO, player2DTO);
 
         ConsolePresenter consolePresenter = new ConsolePresenter(writer, () -> "2");

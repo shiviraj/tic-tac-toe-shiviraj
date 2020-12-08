@@ -2,15 +2,16 @@ package com.step.shivi_melodyni.ttt.model.player;
 
 import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
 import com.step.shivi_melodyni.ttt.model.Board;
+import com.step.shivi_melodyni.ttt.model.Symbol;
 import com.step.shivi_melodyni.ttt.presenter.Presenter;
 
 public class AIPlayer implements Player {
-    private final char symbol = 'O';
+    private final Symbol symbol = Symbol.ZERO;
     private final String name = "Computer";
 
     @Override
     public PlayerDTO toDTO() {
-        return new PlayerDTO(this.name, this.symbol);
+        return new PlayerDTO(this.name, this.symbol.toDTO());
     }
 
     @Override
@@ -47,7 +48,7 @@ public class AIPlayer implements Player {
             return 0;
         }
         int bestScore = 1000;
-        char symbol = 'X';
+        Symbol symbol = Symbol.ZERO;
         if (isMaximizing) {
             bestScore = -1000;
             symbol = this.symbol;

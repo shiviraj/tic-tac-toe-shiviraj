@@ -4,6 +4,7 @@ import com.step.shivi_melodyni.ttt.dto.BoardDTO;
 import com.step.shivi_melodyni.ttt.dto.PlayerDTO;
 import com.step.shivi_melodyni.ttt.io.Writer;
 import com.step.shivi_melodyni.ttt.model.Board;
+import com.step.shivi_melodyni.ttt.model.Symbol;
 import com.step.shivi_melodyni.ttt.presenter.ConsolePresenter;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class AIPlayerTest {
     @Test
     public void shouldGivePlayerDTO() {
         AIPlayer aiPlayer = new AIPlayer();
-        PlayerDTO playerDTO = new PlayerDTO("Computer", 'O');
+        PlayerDTO playerDTO = new PlayerDTO("Computer", Symbol.ZERO.toDTO());
         assertEquals(playerDTO, aiPlayer.toDTO());
 
     }
@@ -26,12 +27,12 @@ public class AIPlayerTest {
 
         AIPlayer aiPlayer = new AIPlayer();
         Board board = new Board(3);
-        board.place(1, 'X');
-        board.place(2, 'O');
-        board.place(3, 'X');
-        board.place(8, 'O');
-        board.place(5, 'X');
-        board.place(9, 'O');
+        board.place(1, Symbol.CROSS);
+        board.place(2, Symbol.ZERO);
+        board.place(3, Symbol.CROSS);
+        board.place(8, Symbol.ZERO);
+        board.place(5, Symbol.CROSS);
+        board.place(9, Symbol.ZERO);
         aiPlayer.playMove(board, new ConsolePresenter(writer, () -> "2"));
 
         BoardDTO boardDTO = new BoardDTO(new char[]{'X', 'O', 'X', '\u0000', 'X', '\u0000', 'O', 'O', 'O'});
@@ -47,12 +48,12 @@ public class AIPlayerTest {
 
         AIPlayer aiPlayer = new AIPlayer();
         Board board = new Board(3);
-        board.place(4, 'X');
-        board.place(2, 'O');
-        board.place(5, 'X');
-        board.place(6, 'O');
-        board.place(8, 'X');
-        board.place(9, 'O');
+        board.place(4, Symbol.CROSS);
+        board.place(2, Symbol.ZERO);
+        board.place(5, Symbol.CROSS);
+        board.place(6, Symbol.ZERO);
+        board.place(8, Symbol.CROSS);
+        board.place(9, Symbol.ZERO);
         aiPlayer.playMove(board, new ConsolePresenter(writer, () -> "2"));
 
         BoardDTO boardDTO = new BoardDTO(new char[]{'\u0000', 'O', 'O', 'X', 'X', 'O', '\u0000', 'X', 'O'});
