@@ -1,6 +1,7 @@
 package com.step.shivi_melodyni.ttt.main;
 
 import com.step.shivi_melodyni.ttt.model.Game;
+import com.step.shivi_melodyni.ttt.model.Symbol;
 import com.step.shivi_melodyni.ttt.model.player.AIPlayer;
 import com.step.shivi_melodyni.ttt.model.player.HumanPlayer;
 import com.step.shivi_melodyni.ttt.model.player.Player;
@@ -13,11 +14,11 @@ public class TicTacToe {
         int boardSize = 3;
 
         String playerName = (args.length > 0) ? args[0] : "Human";
-        Player player = new HumanPlayer(playerName, 'X');
+        Player player = new HumanPlayer(playerName, Symbol.CROSS);
 
         Player opponent;
         if (args.length > 1) {
-            opponent = new HumanPlayer(args[1], 'O');
+            opponent = new HumanPlayer(args[1], Symbol.ZERO);
         } else {
             opponent = new AIPlayer();
         }
