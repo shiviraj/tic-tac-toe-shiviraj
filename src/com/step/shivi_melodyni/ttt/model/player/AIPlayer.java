@@ -48,7 +48,7 @@ public class AIPlayer implements Player {
             return 0;
         }
         int bestScore = 1000;
-        Symbol symbol = Symbol.ZERO;
+        Symbol symbol = Symbol.CROSS;
         if (isMaximizing) {
             bestScore = -1000;
             symbol = this.symbol;

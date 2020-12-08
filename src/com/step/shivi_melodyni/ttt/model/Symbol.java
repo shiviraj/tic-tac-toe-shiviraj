@@ -14,7 +14,7 @@ public enum Symbol {
     }
 
     public boolean isEmpty() {
-        return this == EMPTY;
+        return this.equals(EMPTY);
     }
 
     public SymbolDTO toDTO() {
