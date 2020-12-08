@@ -62,7 +62,12 @@ public class Board {
         return false;
     }
 
-    public boolean anyDiagonalContainsSameSymbol() {
+    public boolean hasGameWon() {
+        return this.anyRowOrColumnContainsSameSymbol() ||
+            this.anyDiagonalContainsSameSymbol();
+    }
+
+    private boolean anyDiagonalContainsSameSymbol() {
         int[] diagonal1 = new int[this.boardSize];
         int[] diagonal2 = new int[this.boardSize];
         for (int i = 0; i < this.boardSize; i++) {
@@ -72,7 +77,7 @@ public class Board {
         return doesEveryCellContainSame(diagonal1) || doesEveryCellContainSame(diagonal2);
     }
 
-    public boolean anyRowOrColumnContainsSameSymbol() {
+    private boolean anyRowOrColumnContainsSameSymbol() {
         for (int i = 0; i < this.boardSize; i++) {
             int[] col = getBoardColumn(i);
             int[] row = getBoardRow(i);
@@ -104,5 +109,4 @@ public class Board {
             return currentSymbol != '\u0000' && currentSymbol == symbol;
         });
     }
-
 }

@@ -31,7 +31,7 @@ public class Game {
     }
 
     private void declareGameResult(Presenter presenter) {
-        if (hasGameWon()) {
+        if (this.board.hasGameWon()) {
             Player winner = this.players[getNextPlayerIndex()];
             presenter.declareWinner(winner.toDTO(), this.toDTO());
         } else {
@@ -40,13 +40,9 @@ public class Game {
     }
 
     private boolean isGameOver() {
-        return this.hasGameWon() || !this.board.isAnyMoveLeft();
+        return this.board.hasGameWon() || !this.board.isAnyMoveLeft();
     }
 
-    private boolean hasGameWon() {
-        return this.board.anyRowOrColumnContainsSameSymbol() ||
-            this.board.anyDiagonalContainsSameSymbol();
-    }
 
     private GameDTO toDTO() {
         return new GameDTO(this.board.toDTO(), this.players[0].toDTO(), this.players[1].toDTO());

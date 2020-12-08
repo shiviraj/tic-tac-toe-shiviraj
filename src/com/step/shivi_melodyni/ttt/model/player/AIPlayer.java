@@ -40,7 +40,7 @@ public class AIPlayer implements Player {
     }
 
     private int minimax(Board virtualBoard, boolean isMaximizing) {
-        if (virtualBoard.anyRowOrColumnContainsSameSymbol() || virtualBoard.anyDiagonalContainsSameSymbol()) {
+        if (virtualBoard.hasGameWon()) {
             return isMaximizing ? -1 : 1;
         }
         if (!virtualBoard.isAnyMoveLeft()) {
